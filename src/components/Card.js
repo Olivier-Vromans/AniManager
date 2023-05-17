@@ -1,12 +1,10 @@
-'use client';
-import Image from 'next/image';
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 
-export default function Card({ img, title }) {
+export default function Card({ img, title, id }) {
   const webpImage = `/img/webp/${img}.webp`;
   const pngImage = `/img/png/${img}.png`;
   return (
-    <a href={pngImage}>
+    <a href={`anime/${id}`}>
       <div className="rounded-3xl overflow-hidden">
         <picture>
           {webpImage && <source srcSet={webpImage} type="image/webp" />}

@@ -13,13 +13,13 @@ export default function Hero() {
           </div>
           <div className="z-10 flex flex-row items-center justify-between w-full overflow-x-scroll md:overflow-hidden">            
           <div className="flex-shrink-0 mx-2 md:mx-5">
-            <Card img={"demon-slayer"} title={"Demon Slayer"} />
+            <Card img={"demon-slayer"} title={"Demon Slayer"} id={1} />
           </div>
             <div className="flex-shrink-0 mx-2 md:mx-5">
-              <Card img={"naruto"} title={"Naruto"} />
+              <Card img={"naruto"} title={"Naruto"} id={2}/>
             </div>
             <div className="flex-shrink-0 mx-2 md:mx-5">
-              <Card img={"codegeass"} title={"Code Geass"} />
+              <Card img={"codegeass"} title={"Code Geass"} id={3}/>
             </div>
           </div>
         </div>
