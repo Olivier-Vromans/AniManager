@@ -1,6 +1,20 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss/base";
+@import "tailwindcss/components";
+@import "tailwindcss/utilities";
+
+@layer base{
+  @font-face {
+    font-family: japanese;
+    src: url(/font/JAPANESE_2020.ttf);
+  }
+  @font-face {
+    font-family: gilroy;
+    src: url(/font/Gilroy-Light.ttf);
+  }
+}
+*{
+  font-family: gilroy, sans-serif;
+}
 
 :root {
   --foreground-rgb: 0, 0, 0;
