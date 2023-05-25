@@ -6,10 +6,16 @@ module.exports = {
     './src/app/**/*.{js,ts,jsx,tsx,mdx}',
   ],
   theme: {
+    container: {
+      center: true,
+    },
     extend: {
       fontFamily: {
         japanese: ['japanese', 'sans-serif'],
         gilroy: ['gilroy', 'sans-serif'],
+      },
+      colors: {
+        primary: '#0e0e0e',
       },
     },
   },
