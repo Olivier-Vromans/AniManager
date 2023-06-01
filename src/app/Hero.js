@@ -3,7 +3,7 @@ import Card from '../components/Card.js';
 
 export default function Hero() {
   return (
-    <div className="flex mb-14 min-h-screen flex-col items-center justify-center bg-[url('/img/webp/mobile-hero.webp')] md:bg-[url('/img/webp/hero.webp')] bg-no-repeat bg-top bg-contain md:bg-no-repeat md:bg-cover">
+    <div className="flex min-h-screen flex-col items-center justify-center bg-[url('/img/webp/mobile-hero.webp')] md:bg-[url('/img/png/itachi.png')] bg-no-repeat bg-top bg-contain md:bg-no-repeat md:bg-cover">
       <div className=" w-full justify-center items-center font-mono text-sm lg:flex">
         <div className="flex flex-col lg:flex-row items-center">
           <div className="flex flex-col text-center items-center w-full p-4 md:p-24">
