@@ -21,7 +21,7 @@
 
 @layer components{
   .btn {
-    @apply mr-4 py-2 px-4 rounded-sm text-white bg-btn 
+    @apply py-2 px-4 rounded-sm text-white bg-btn 
   }
   .btn-secondary {
     @apply btn font-bold rounded-full py-4 px-8 tracking-wider

@@ -3,6 +3,7 @@ import Image from "next/image.js";
 import { useState, useEffect, useCallback } from "react";
 
 export default function AnimeDetail({ params }) {
+  const [activeFilter, setActiveFilter] = useState('release');
   const [series, setSeries] = useState({
     title: 'Code Geass',
     anime: [
@@ -77,20 +78,6 @@ export default function AnimeDetail({ params }) {
   // Determine if the user is scrolling up or down and adjust the banner accordingly
   const [y, setY] = useState(0);
   const [isMobile, setIsMobile] = useState(false);
-  useEffect(() => {
-    const handleScroll = () => {
-      setY(Math.min(window.scrollY, 320));
-    };
-
-    if (!isMobile) {
-      window.addEventListener('scroll', handleScroll);
-    }
-
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
-    };
-  }, [isMobile]);
-
   // Determine if the user is on mobile or not
   useEffect(() => {
     const handleResize = () => {
@@ -105,19 +92,34 @@ export default function AnimeDetail({ params }) {
     };
   }, []);
 
-  const [activeFilter, setActiveFilter] = useState('release');
+  useEffect(() => {
+    const handleScroll = () => {
+      setY(Math.min(window.scrollY, 320));
+    };
+
+    if (!isMobile) {
+      window.addEventListener('scroll', handleScroll);
+    }
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, [isMobile]);
+
 
   const Filter = ({ activeFilter, setActiveFilter }) => {
     return (
-      <div id="filters" className="flex flex-row items-center justify-center md:justify-start w-full mb-4">
+      <div id="filters" className="flex flex-col">
+        <p className="hidden sm:block text-lg font-gilroy text-subtext">Order</p>
+        <div className="flex flex-row items-center justify-around w-full mb-4">
         <button
-          className={`${activeFilter === 'release' ? 'btn' : 'btn-inactive'} mr-4 py-2 px-4 rounded-sm`}
+          className={`${activeFilter === 'release' ? 'btn' : 'btn-inactive'} py-2 px-4 rounded-sm`}
           onClick={() => setActiveFilter('release')}
         >
           Release
         </button>
         <button
-          className={`${activeFilter === 'chronicle' ? 'btn' : 'btn-inactive'} mr-4 py-2 px-4 rounded-sm`}
+          className={`${activeFilter === 'chronicle' ? 'btn' : 'btn-inactive'} py-2 px-4 rounded-sm`}
           onClick={() => setActiveFilter('chronicle')}
         >
           Chronicle
@@ -128,6 +130,7 @@ export default function AnimeDetail({ params }) {
         >
           Community
         </button>
+        </div>
       </div>
     );
   };
@@ -145,7 +148,7 @@ export default function AnimeDetail({ params }) {
         ></div>
         <div className="container flex flex-row mb-24">
           <div id="poster" className="flex-initial">
-            <Image className="md:mb-4 hidden md:block" src={poster} alt={series.title} width={250} height={350} />
+            <Image className="md:mb-4 hidden md:block w-full" src={poster} alt={series.title} width={250} height={350} />
             {!isMobile && <Filter activeFilter={activeFilter} setActiveFilter={setActiveFilter} />}
           </div>
           <div id="order" className="flex-1 md:ml-6">
@@ -153,7 +156,7 @@ export default function AnimeDetail({ params }) {
             {isMobile && <Filter activeFilter={activeFilter} setActiveFilter={setActiveFilter} />}
             <div className="flex flex-col flex-wrap items-center justify-center md:justify-start w-full pb-8">
               {series.anime.map((anime) => (
-                <div className="flex flex-row items-center justify-center w-full mb-4 sm:mb-0 md:m-6">
+                <div id={anime.id} className="flex flex-row items-center justify-center w-full mb-4 sm:mb-0 md:m-6">
                   <Image
                     className='w-32 h-32 md:w-1/2 lg:w-1/6 object-contain'
                     src={anime.poster}
