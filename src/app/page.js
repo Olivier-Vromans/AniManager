@@ -1,8 +1,12 @@
 'use client'
 import { useEffect, useState } from 'react';
 import Hero from '@/app/Hero.js';
+import Image from 'next/image.js';
 
 export default function Home() {
+  const [genres, setGenres] = useState(['isekai', 'drama', 'action', 'romance', 'horror']);
+
+
   return (
     <main>
       <Hero />
@@ -16,27 +20,17 @@ export default function Home() {
           </div>
           {/* TODO Change to dynamic genres */}
           <div className='flex flex-wrap lg:flex-row justify-around lg:justify-between w-full  items-baseline'>
-            {/* four clickable images with an opacity of 60% with a title on top of it slight down from the center */}
-            <div className='flex flex-col justify-center m-2 md:m-0 items-center w-44 h-64 lg:w-52 lg:h-64 2xl:w-64 2xl:h-96 relative'>
-              <img className='opacity-60 rounded-xl object-cover w-full h-full' src='/img/webp/genre/isekai.webp' alt='isekai' />
-              <p className='md:text-2xl font-bold text-center font-japanese absolute'>isekai</p>
-            </div>
-            <div className='flex flex-col justify-center m-2 md:m-0 items-center w-44 h-64 lg:w-52 lg:h-64 2xl:w-64 2xl:h-96 relative'>
-              <img className='opacity-60 rounded-xl object-cover w-full h-full' src='/img/webp/genre/drama.webp' alt='isekai' />
-              <p className='md:text-2xl font-bold text-center font-japanese absolute'>drama</p>
-            </div>
-            <div className='flex flex-col justify-center m-2 md:m-0 items-center w-44 h-64 lg:w-52 lg:h-64 2xl:w-64 2xl:h-96 relative'>
-              <img className='opacity-60 rounded-xl object-cover w-full h-full' src='/img/webp/genre/action.webp' alt='action' />
-              <p className='md:text-2xl font-bold text-center font-japanese absolute'>Action</p>
-            </div>
-            <div className='flex flex-col justify-center m-2 md:m-0 items-center w-44 h-64 lg:w-52 lg:h-64 2xl:w-64 2xl:h-96 relative'>
-              <img className='opacity-60 rounded-xl object-cover w-full h-full' src='/img/webp/genre/romance.webp' alt='romance' />
-              <p className='md:text-2xl font-bold text-center font-japanese absolute'>Romance</p>
-            </div>
-            <div className=' hidden sm:flex flex-col justify-center m-2 md:m-0 items-center w-44 h-64 lg:w-52 lg:h-64 2xl:w-64 2xl:h-96 relative'>
-              <img className='opacity-60 rounded-xl object-cover w-full h-full' src='/img/webp/genre/horror.webp' alt='horror' />
-              <p className='md:text-2xl font-bold text-center font-japanese absolute'>Horror</p>
-            </div>
+            {genres.map((genre) => (
+              <div key={genre} className='flex flex-col justify-center m-2 md:m-0 items-center w-44 h-64 lg:w-52 lg:h-64 2xl:w-64 2xl:h-96 relative'>
+                <Image
+                  className='opacity-60 rounded-xl object-cover'
+                  src={`/img/webp/genre/${genre}.webp`}
+                  alt={genre}
+                  fill
+                />
+                <p className='md:text-2xl font-bold text-center font-japanese absolute'>{genre}</p>
+              </div>
+            ))}
           </div>
         </div>
       </div>

@@ -1,6 +1,6 @@
 "use client";
 import Image from "next/image.js";
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect } from "react";
 
 export default function AnimeDetail({ params }) {
   const [activeFilter, setActiveFilter] = useState('release');
@@ -59,11 +59,15 @@ export default function AnimeDetail({ params }) {
     order: 0,
   });
 
+  
   const [banner, setBanner] = useState();
   const [poster, setPoster] = useState();
 
-  // Randomize the banner and poster images
+  const [y, setY] = useState(0);
+  const [isMobile, setIsMobile] = useState(false);
+  
   useEffect(() => {
+    // Randomize the banner and poster images
     const randomizeImages = () => {
       const anime = series.anime;
       const randomBannerIndex = Math.floor(Math.random() * anime.length);
@@ -72,14 +76,7 @@ export default function AnimeDetail({ params }) {
       setPoster(anime[randomPosterIndex].poster);
     };
 
-    randomizeImages();
-  }, []);
-
-  // Determine if the user is scrolling up or down and adjust the banner accordingly
-  const [y, setY] = useState(0);
-  const [isMobile, setIsMobile] = useState(false);
-  // Determine if the user is on mobile or not
-  useEffect(() => {
+    // Determine if the user is scrolling up or down and adjust the banner accordingly
     const handleResize = () => {
       setIsMobile(window.innerWidth <= 768); // Adjust the breakpoint if needed
     };
@@ -90,7 +87,9 @@ export default function AnimeDetail({ params }) {
     return () => {
       window.removeEventListener('resize', handleResize); // Clean up event listener
     };
-  }, []);
+
+    randomizeImages();
+  });
 
   useEffect(() => {
     const handleScroll = () => {
@@ -112,29 +111,29 @@ export default function AnimeDetail({ params }) {
       <div id="filters" className="flex flex-col">
         <p className="hidden sm:block text-lg font-gilroy text-subtext">Order</p>
         <div className="flex flex-row items-center justify-around w-full mb-4">
-        <button
-          className={`${activeFilter === 'release' ? 'btn' : 'btn-inactive'} py-2 px-4 rounded-sm`}
-          onClick={() => setActiveFilter('release')}
-        >
-          Release
-        </button>
-        <button
-          className={`${activeFilter === 'chronicle' ? 'btn' : 'btn-inactive'} py-2 px-4 rounded-sm`}
-          onClick={() => setActiveFilter('chronicle')}
-        >
-          Chronicle
-        </button>
-        <button
-          className={`${activeFilter === 'community' ? 'btn' : 'btn-inactive'} py-2 px-4 rounded-sm`}
-          onClick={() => setActiveFilter('community')}
-        >
-          Community
-        </button>
+          <button
+            className={`${activeFilter === 'release' ? 'btn' : 'btn-inactive'} py-2 px-4 rounded-sm`}
+            onClick={() => setActiveFilter('release')}
+          >
+            Release
+          </button>
+          <button
+            className={`${activeFilter === 'chronicle' ? 'btn' : 'btn-inactive'} py-2 px-4 rounded-sm`}
+            onClick={() => setActiveFilter('chronicle')}
+          >
+            Chronicle
+          </button>
+          <button
+            className={`${activeFilter === 'community' ? 'btn' : 'btn-inactive'} py-2 px-4 rounded-sm`}
+            onClick={() => setActiveFilter('community')}
+          >
+            Community
+          </button>
         </div>
       </div>
     );
   };
-  
+
 
   return (
     <main>
@@ -156,7 +155,7 @@ export default function AnimeDetail({ params }) {
             {isMobile && <Filter activeFilter={activeFilter} setActiveFilter={setActiveFilter} />}
             <div className="flex flex-col flex-wrap items-center justify-center md:justify-start w-full pb-8">
               {series.anime.map((anime) => (
-                <div id={anime.id} className="flex flex-row items-center justify-center w-full mb-4 sm:mb-0 md:m-6">
+                <div key={anime.id} className="flex flex-row items-center justify-center w-full mb-4 sm:mb-0 md:m-6">
                   <Image
                     className='w-32 h-32 md:w-1/2 lg:w-1/6 object-contain'
                     src={anime.poster}
