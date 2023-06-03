@@ -1,8 +1,6 @@
 "use client";
 import Image from "next/image";
 import { useState, useEffect } from "react";
-import Skeleton from "react-loading-skeleton";
-import 'react-loading-skeleton/dist/skeleton.css'
 
 
 async function getData() {
