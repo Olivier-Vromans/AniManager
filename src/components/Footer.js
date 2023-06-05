@@ -14,7 +14,7 @@ export default function Footer() {
                     <div>
                         <p className='text-white text-center md:text-left'>© 2023 {metadata.title}. All rights reserved.</p>
                     </div>
-                    <div className="flex flex-row md:flex-col justify-center items-center space-x-4 mt-4 md:space-y-0 md:space-x-4">
+                    <div className="flex flex-row justify-center items-center space-x-4 mt-4 md:space-y-0 md:space-x-4">
                         <a href="https://olivier-vromans.github.io/Portfolio/" target="_blank" rel="noopener noreferrer">
                             <BsFillPersonVcardFill className="text-2xl md:text-3xl text-white hover:text-red-500" />
                         </a>

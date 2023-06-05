@@ -15,7 +15,7 @@ export default function Nav() {
                 <a href='/' className='mx-2 md:mx-3 object-center flex flex-col items-center'>
                     {/* <FaDatabase color='#808080' size={25} /> */}
                 </a>
-                {/* <AdminIcon /> */}
+                <AdminIcon />
                 {/* <a href='/' className='mx-2 md:mx-3'>
                     <FaUser color='#808080' size={25} />
                 </a>
