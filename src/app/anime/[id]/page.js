@@ -12,8 +12,8 @@ async function getData() {
         {
           id: 1,
           title: "Lelouch of the Rebellion",
-          poster: "/img/webp/anime/lelouch-of-the-rebellion/poster.webp",
-          banner: "/img/webp/anime/lelouch-of-the-rebellion/banner.webp",
+          poster: "/img/webp/anime/code-geass/lelouch-of-the-rebellion/poster.webp",
+          banner: "/img/webp/anime/code-geass/lelouch-of-the-rebellion/banner.webp",
           genres: [],
           episodes: [
             {
@@ -35,8 +35,8 @@ async function getData() {
         {
           id: 2,
           title: "Lelouch of the Rebellion R2",
-          poster: "/img/webp/anime/lelouch-of-the-rebellion-r2/poster.webp",
-          banner: "/img/webp/anime/lelouch-of-the-rebellion-r2/banner.webp",
+          poster: "/img/webp/anime/code-geass/lelouch-of-the-rebellion-r2/poster.webp",
+          banner: "/img/webp/anime/code-geass/lelouch-of-the-rebellion-r2/banner.webp",
           genres: [],
           episodes: [
             {
