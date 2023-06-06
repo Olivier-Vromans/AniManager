@@ -1,0 +1,91 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model Series {
+  serie_id    Int           @id @default(autoincrement())
+  serie_name  String        @unique
+  featured    Boolean       @default(false)
+  seriesOrder SerieOrders[]
+  animes      Animes[]
+}
+
+model Animes {
+  anime_id     Int          @id @default(autoincrement())
+  serie_id     Int
+  title        String       @unique
+  description  String?      @default("No description available yet. Check back later!")
+  release_date DateTime?
+  is_dubbed    Boolean      @default(false)
+  optional     Boolean      @default(false)
+  poster       String?
+  banner       String?
+  type         AnimeType
+  genres       Genre[]
+  series       Series       @relation(fields: [serie_id], references: [serie_id])
+  episodes     Episode[]
+  AnimeOrder   AnimeOrder[]
+  AnimeGenre   AnimeGenre[]
+}
+
+enum AnimeType {
+  TV
+  Movie
+  OVA
+  ONA
+  Special
+}
+
+model Genre {
+  genre_id   Int          @id @default(autoincrement())
+  genre_name String       @unique
+  url        String       @unique
+  count      Int          @default(0)
+  animes     Animes[]
+  AnimeGenre AnimeGenre[]
+}
+
+model SerieOrders {
+  order_id    Int          @id @default(autoincrement())
+  serie_id    Int          @unique
+  order_type  OrderType
+  animeOrders AnimeOrder[]
+  series      Series       @relation(fields: [serie_id], references: [serie_id])
+}
+
+enum OrderType {
+  Chronological
+  Release
+  Community
+}
+
+model AnimeOrder {
+  animeOrderId Int          @id @default(autoincrement())
+  anime_id     Int
+  order_index  Int
+  serie_id     Int
+  animes       Animes       @relation(fields: [anime_id], references: [anime_id])
+  seriesOrder  SerieOrders? @relation(fields: [serie_id], references: [serie_id])
+}
+
+model Episode {
+  episode_id     Int     @id @default(autoincrement())
+  anime_id       Int
+  episode_number Int
+  is_filler      Boolean @default(false)
+  anime          Animes  @relation(fields: [anime_id], references: [anime_id])
+}
+
+model AnimeGenre {
+  anime_id Int
+  genre_id Int
+  anime    Animes @relation(fields: [anime_id], references: [anime_id])
+  genre    Genre  @relation(fields: [genre_id], references: [genre_id])
+
+  @@id([anime_id, genre_id])
+}
