@@ -6,6 +6,7 @@ import Modal from 'react-modal';
 import { PrismaClient } from '@prisma/client';
 
 export default function AdminPage() {
+    const [error,  setError] = useState(null);
     const [fetching, setFetching] = useState(true);
     const [seriesName, setSeriesName] = useState('');
     const [title, setTitle] = useState('');
@@ -45,6 +46,8 @@ export default function AdminPage() {
             console.log(response.data);
         } catch (error) {
             console.log(error);
+            setError(error);
+
         }
     }
 
@@ -175,6 +178,11 @@ export default function AdminPage() {
                             </tbody>
                         </table>
                     )}
+                    {/* if fetching and error is null */}
+                    {fetching && !error && (
+                        <p className="text-white">Loading...</p>
+                    )}
+                    {error && <p>{error.message}</p>}
                 </div>
             </div>
         </div>
