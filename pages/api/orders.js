@@ -1,10 +1,10 @@
 import { PrismaClient } from '@prisma/client';
-import { NextApiRequest, NextApiResponse } from 'next';
 
 const prisma = new PrismaClient();
 
 export default async function handler(req, res) {
   try {
+    await prisma.$connect();
     const series = await prisma.series.findMany({
       include: {
         seriesOrder: {
