@@ -1,6 +1,6 @@
 'use client'
 import { useEffect, useState } from 'react';
-import Hero from '@/components/Hero.js';
+import Hero from '../components/Hero.js';
 import Image from 'next/image.js';
 
 export default function Home() {

@@ -1,9 +1,8 @@
 import React from 'react'
 import { FaGithub, FaInstagram, FaLinkedin } from 'react-icons/fa'
 import { BsFillPersonVcardFill } from 'react-icons/bs'
-import { metadata } from '@/app/layout.js'
 
-export default function Footer() {
+export default function Footer({ metadata}) {
     return (
         <footer className='bg-primary'>
             <div className='container'>

@@ -1,9 +1,8 @@
 import React from 'react';
 import { FaBars, FaDatabase, FaSearch, FaUser } from 'react-icons/fa';
-import { metadata } from '@/app/layout.js';
 import AdminIcon from './AdminIcon.js';
 
-export default function Nav() {
+export default function Nav({metadata}) {
 
     return (
         <nav className='absolute z-50 flex flex-row items-center justify-between left-0 right-0 top-6 md:top-10 px-6 md:px-32'>
