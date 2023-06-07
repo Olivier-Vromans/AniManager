@@ -1,3 +1,4 @@
+-- Active: 1686139147299@@aws.connect.psdb.cloud@3306@animanager
 -- Use the database
 USE animanager;
 

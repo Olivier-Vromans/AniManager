@@ -1,5 +1,5 @@
 'use client'
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import Hero from '../components/Hero.js';
 import Image from 'next/image.js';
 

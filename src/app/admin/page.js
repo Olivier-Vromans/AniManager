@@ -1,129 +1,44 @@
 "use client"
-import { useState, useEffect } from 'react';
-import axios from 'axios';
-import { FaImage, FaPhotoVideo } from 'react-icons/fa';
-import Modal from 'react-modal';
-import { PrismaClient } from '@prisma/client';
+import { useSession } from "next-auth/react";
+import axios from "axios";
+import { useEffect, useState } from "react";
 
 export default function AdminPage() {
-    const [error,  setError] = useState(null);
+    const { data: session, status } = useSession({
+        required: true,
+    });
+    
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
+
     const [fetching, setFetching] = useState(true);
-    const [seriesName, setSeriesName] = useState('');
-    const [title, setTitle] = useState('');
-    const [description, setDescription] = useState('');
-    const [releaseDate, setReleaseDate] = useState('');
-    const [isDubbed, setIsDubbed] = useState(false);
-    const [optional, setOptional] = useState(false);
-    const [poster, setPoster] = useState('');
-    const [banner, setBanner] = useState('');
-    const [type, setType] = useState('');
-    const [episodes, setEpisodes] = useState([]);
-    const [episodeNumber, setEpisodeNumber] = useState('');
-    const [isFiller, setIsFiller] = useState(false);
     const [serie, setSerie] = useState([]);
-    const [selectedViewingOrder, setSelectedViewingOrder] = useState('');
-    const [episodeSequence, setEpisodeSequence] = useState('');
-    const [modalOpen, setModalOpen] = useState(false);
-
-    const openModal = () => {
-        setModalOpen(true);
-    };
-
-    const closeModal = () => {
-        setModalOpen(false);
-    };
-
-    useEffect(() => {
-        // Fetch existing viewing orders
-        fetchViewingOrders();
-    }, []);
 
     async function fetchViewingOrders() {
         try {
-            const response = await axios.get('/api/orders');
+            const response = await axios.get("/api/orders");
             setFetching(false);
             setSerie(response.data);
             console.log(response.data);
         } catch (error) {
             console.log(error);
             setError(error);
-
         }
     }
 
-    async function createSeries() {
-        try {
-            const response = await axios.post('/api/series', { seriesName });
-            const seriesId = response.data.seriesId;
-            await createAnime(seriesId);
-        } catch (error) {
-            console.log(error);
-        }
-    }
+    useEffect(() => {
+        fetchViewingOrders();
+    }, [status === "authenticated"]);
 
-    async function createAnime(seriesId) {
-        try {
-            const response = await axios.post('/api/anime', {
-                seriesId,
-                title,
-                description,
-                releaseDate,
-                isDubbed,
-                optional,
-                poster,
-                banner,
-                type,
-            });
-            const animeId = response.data.animeId;
-            await createViewingOrder(animeId);
-        } catch (error) {
-            console.log(error);
-        }
-    }
-
-    async function createViewingOrder(animeId) {
-        try {
-            const response = await axios.post('/api/viewing-orders', {
-                orderType: selectedViewingOrder,
-                animeId,
-                episodes,
-                episodeSequence,
-            });
-            console.log(response.data);
-            // Reset form values
-            setSeriesName('');
-            setTitle('');
-            setDescription('');
-            setReleaseDate('');
-            setIsDubbed(false);
-            setOptional(false);
-            setPoster('');
-            setBanner('');
-            setType('');
-            setEpisodes([]);
-            setEpisodeNumber('');
-            setIsFiller(false);
-            setSelectedViewingOrder('');
-            setEpisodeSequence('');
-            // Fetch updated viewing orders
-            fetchViewingOrders();
-        } catch (error) {
-            console.log(error);
-        }
-    }
-
-    function addEpisode() {
-        if (episodeNumber && episodeSequence) {
-            setEpisodes((prevEpisodes) => [
-                ...prevEpisodes,
-                {
-                    episodeNumber,
-                    isFiller,
-                },
-            ]);
-            setEpisodeNumber('');
-            setIsFiller(false);
-        }
+    if (status === "loading") {
+        return (
+            <div className="container mt-20 md:mt-24">
+                <h1 className="text-3xl font-semibold font-japanese text-white">Loading</h1>
+                <div className="flex justify-center items-center h-96">
+                    <div className="animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-white"></div>
+                </div>
+            </div>
+        )
     }
 
     return (
@@ -150,7 +65,6 @@ export default function AdminPage() {
                         </div>
                     </div>
                     <button
-                        onClick={createSeries}
                         className="btn mt-4"
                     >
                         Create Series
@@ -186,6 +100,5 @@ export default function AdminPage() {
                 </div>
             </div>
         </div>
-
-    )
+    );
 }
