@@ -1,14 +1,11 @@
-import { PrismaClient } from "@prisma/client";
 import { z } from "zod";
 import bcrypt from "bcryptjs";
-import { NextApiRequest, NextApiResponse } from "next";
+import prisma from "../../../prisma/prismaClient.js";
 
 const signupUserSchema = z.object({
   username: z.string().regex(/^[a-z0-9_-]{3,15}$/g, "username is not valid"),
   password: z.string().min(5, "password is too short"),
 });
-
-const prisma = new PrismaClient();
 
 export default async function signup(req, res) {
   console.log("New signup request");
@@ -22,7 +19,7 @@ export default async function signup(req, res) {
 
   const hashedPassword = await bcrypt.hash(password, 10);
 
-  const newUser = await prisma.user.create({
+  const newUser = await prism.user.create({
     data: {
       username,
       password: hashedPassword,

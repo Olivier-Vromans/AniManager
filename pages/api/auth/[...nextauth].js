@@ -1,11 +1,10 @@
 import NextAuth from "next-auth"
 import CredentialsProvider from "next-auth/providers/credentials"
 import { PrismaAdapter } from "@next-auth/prisma-adapter"
-import { PrismaClient } from "@prisma/client"
 import { z } from "zod"
 import bcrypt from 'bcryptjs'
+import prisma from "../../../prisma/prismaClient.js"
 
-const prisma = new PrismaClient()
 
 const signinUserSchema = z.object({
     username: z.string().regex(/^[a-z0-9_-]{3,15}$/g, 'username is not valid'),
