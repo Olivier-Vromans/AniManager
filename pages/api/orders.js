@@ -1,8 +1,7 @@
-import { PrismaClient } from '@prisma/client';
 import { getServerSession } from "next-auth/next"
 import { authOptions } from "./auth/[...nextauth]"
+import prisma from '../../prisma/prismaClient.js';
 
-const prisma = new PrismaClient();
 
 export default async function handler(req, res) {
   const session = await getServerSession(req, res, authOptions)
@@ -10,7 +9,6 @@ export default async function handler(req, res) {
     res.status(401).json({message: "Unauthorized"})
   }
   try {
-    await prisma.$connect();
     const series = await prisma.series.findMany({
       include: {
         seriesOrder: {
@@ -98,7 +96,5 @@ export default async function handler(req, res) {
     res.status(200).json(formattedSeries);
   } catch (error) {
     res.status(500).json({ error: 'Error retrieving series' });
-  } finally {
-    await prisma.$disconnect();
   }
 }
