@@ -1,10 +1,10 @@
 import React from 'react';
 
 export default function Card({ img, title, id }) {
-  const webpImage = `/img/webp/${img}.webp`;
-  const pngImage = `/img/png/${img}.png`;
+  const webpImage = `/img/anime/${img}`;
+  const pngImage = `/img/anime/${img}`;
   return (
-    <a href={`anime/${id}`}>
+    <div>
       <div className="rounded-3xl overflow-hidden">
         <picture>
           {webpImage && <source srcSet={webpImage} type="image/webp" />}
@@ -13,6 +13,6 @@ export default function Card({ img, title, id }) {
         </picture>
       </div>
       <p className="text-xl md:text-2xl lg:text-3xl">{title}</p>
-    </a>
+    </div>
   );
 }

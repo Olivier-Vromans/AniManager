@@ -27,6 +27,7 @@ export default function Home() {
                   src={`/img/webp/genre/${genre}.webp`}
                   alt={genre}
                   fill
+                  sizes='100%, 100%'
                 />
                 <p className='md:text-2xl font-bold text-center font-japanese absolute'>{genre}</p>
               </div>
