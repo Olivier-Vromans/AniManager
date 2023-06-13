@@ -17,9 +17,9 @@ export default async function handler(req, res) {
       include: {
         seriesOrder: {
           include: {
-            animeOrders: {
+            seriesOrderItems: {
               include: {
-                animes: {
+                anime: {
                   include: {
                     genres: true,
                     episodes: true,
@@ -36,7 +36,6 @@ export default async function handler(req, res) {
           },
         },
       },
-
     });
 
     if (!series) {

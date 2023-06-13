@@ -8,30 +8,31 @@ datasource db {
 }
 
 model Series {
-  serie_id    Int           @id @default(autoincrement())
-  serie_name  String        @unique
-  is_featured    Boolean       @default(false)
-  poster      String?
-  seriesOrder SerieOrders[]
-  animes      Animes[]
+  serie_id        Int               @id @default(autoincrement())
+  serie_name      String            @unique
+  is_featured     Boolean           @default(false)
+  poster          String?
+  seriesOrder     SerieOrder[]
+  animes          Anime[]
+  seriesOrderItem SeriesOrderItem[]
 }
 
-model Animes {
-  anime_id     Int          @id @default(autoincrement())
-  serie_id     Int
-  title        String       @unique
-  description  String?      @default("No description available yet. Check back later!")
-  release_date DateTime?
-  is_dubbed    Boolean      @default(false)
-  optional     Boolean      @default(false)
-  poster       String?
-  banner       String?
-  type         AnimeType
-  genres       Genre[]
-  series       Series       @relation(fields: [serie_id], references: [serie_id])
-  episodes     Episode[]
-  AnimeOrder   AnimeOrder[]
-  AnimeGenre   AnimeGenre[]
+model Anime {
+  anime_id         Int               @id @default(autoincrement())
+  serie_id         Int
+  title            String            @unique
+  description      String?           @default("No description available yet. Check back later!")
+  release_date     DateTime?
+  is_dubbed        Boolean           @default(false)
+  optional         Boolean           @default(false)
+  poster           String?
+  banner           String?
+  type             AnimeType
+  genres           Genre[]
+  series           Series            @relation(fields: [serie_id], references: [serie_id])
+  episodes         Episode[]
+  animeGenre       AnimeGenre[]
+  seriesOrderItems SeriesOrderItem[]
 }
 
 enum AnimeType {
@@ -47,46 +48,38 @@ model Genre {
   genre_name String       @unique
   url        String       @unique
   count      Int          @default(0)
-  animes     Animes[]
-  AnimeGenre AnimeGenre[]
+  animes     Anime[]
+  animeGenre AnimeGenre[]
 }
 
-model SerieOrders {
-  order_id    Int          @id @default(autoincrement())
-  serie_id    Int          @unique
-  order_type  OrderType
-  animeOrders AnimeOrder[]
-  series      Series       @relation(fields: [serie_id], references: [serie_id])
+model SerieOrder {
+  order_id         Int               @id @default(autoincrement())
+  serie_id         Int
+  order_type       OrderType
+  series           Series            @relation(fields: [serie_id], references: [serie_id])
+  seriesOrderItems SeriesOrderItem[]
 }
 
 enum OrderType {
-  Chronological
   Release
+  Chronological
   Community
 }
 
-model AnimeOrder {
-  animeOrderId Int          @id @default(autoincrement())
-  anime_id     Int
-  order_index  Int
-  serie_id     Int
-  animes       Animes       @relation(fields: [anime_id], references: [anime_id])
-  seriesOrder  SerieOrders? @relation(fields: [serie_id], references: [serie_id])
-}
-
 model Episode {
-  episode_id     Int     @id @default(autoincrement())
   anime_id       Int
   episode_number Int
   is_filler      Boolean @default(false)
-  anime          Animes  @relation(fields: [anime_id], references: [anime_id])
+  anime          Anime   @relation(fields: [anime_id], references: [anime_id])
+
+  @@id([anime_id, episode_number])
 }
 
 model AnimeGenre {
   anime_id Int
   genre_id Int
-  anime    Animes @relation(fields: [anime_id], references: [anime_id])
-  genre    Genre  @relation(fields: [genre_id], references: [genre_id])
+  anime    Anime @relation(fields: [anime_id], references: [anime_id])
+  genre    Genre @relation(fields: [genre_id], references: [genre_id])
 
   @@id([anime_id, genre_id])
 }
@@ -114,4 +107,19 @@ model User {
 enum Role {
   USER
   ADMIN
+}
+
+model SeriesOrderItem {
+  series_order_item_id Int        @id @default(autoincrement())
+  order_id             Int        @map("order_id")
+  serie_id             Int        @map("serie_id")
+  anime_id             Int        @map("anime_id")
+  order                Int
+  fromEpisode          Int        @map("from_episode")
+  toEpisode            Int        @map("to_episode")
+  series               Series     @relation(fields: [serie_id], references: [serie_id])
+  anime                Anime      @relation(fields: [anime_id], references: [anime_id])
+  serieOrder           SerieOrder @relation(fields: [order_id], references: [order_id])
+
+  @@map(name: "SeriesOrderItem")
 }
