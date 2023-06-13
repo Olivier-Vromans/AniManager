@@ -29,7 +29,7 @@ export default function Featured() {
     return (
         <div id='featured' className="z-10 flex flex-row items-center justify-between w-full overflow-x-scroll sm:overflow-hidden">
             {featuredSeries.map((serie) => (
-                <a href={`serie/${serie.serie_id}`} key={serie.serie_id} className="flex-shrink-0 mx-2 sm:mx-5">
+                <a href={`series/${serie.serie_id}`} key={serie.serie_id} className="flex-shrink-0 mx-2 sm:mx-5">
                     <Card img={serie.poster ? serie.poster : serie.animes[0].poster} title={serie.serie_name} id={serie.serie_id} />
                 </a>
             ))}
