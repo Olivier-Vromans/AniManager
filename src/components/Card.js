@@ -1,8 +1,8 @@
 import React from 'react';
 
 export default function Card({ img, title, id }) {
-  const webpImage = `/img/anime/${img}`;
-  const pngImage = `/img/anime/${img}`;
+  const webpImage = `/img/anime/${title.toLowerCase().replace(/\s/g, "-")}/${img}`;
+  const pngImage = `/img/anime/${title.toLowerCase().replace(/\s/g, "-")}/${img}`;
   return (
     <div>
       <div className="rounded-3xl overflow-hidden">
