@@ -10,7 +10,6 @@ async function getData(serieId) {
     const response = await axios.get(`/api/series/${serieId}`);
     return response.data;
   } catch (error) {
-    console.log(error);
     throw error;
   }
 }

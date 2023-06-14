@@ -19,7 +19,6 @@ export default function AdminPage() {
             const response = await axios.get("/api/orders");
             setFetching(false);
             setSerie(response.data);
-            console.log(response.data);
         } catch (error) {
             console.log(error);
             setError(error);

@@ -12,7 +12,6 @@ export default function Nav({ metadata }) {
     useEffect(() => {
         if (data) {
             setUser(data.user);
-            console.log(data);
         }
     }, [data]);
 

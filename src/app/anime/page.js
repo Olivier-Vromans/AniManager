@@ -9,7 +9,6 @@ async function getAnimeData() {
     const response = await axios.get(`/api/anime`);
     return response.data;
   } catch (error) {
-    console.log(error);
     throw error;
   }
 }

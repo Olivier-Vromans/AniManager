@@ -8,7 +8,6 @@ const signupUserSchema = z.object({
 });
 
 export default async function signup(req, res) {
-  console.log("New signup request");
   const { username, password } = signupUserSchema.parse(req.body);
   const user = await prisma.user.findUnique({
     where: { username: username },

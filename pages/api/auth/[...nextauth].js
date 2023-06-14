@@ -26,7 +26,6 @@ const authOptions = {
                 const isPasswordValid = await bcrypt.compare(password, user.password)
                 if(!isPasswordValid) return null
 
-                console.log(user);
                 if (user) {
                     return user
                 }

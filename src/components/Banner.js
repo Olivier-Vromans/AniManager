@@ -1,7 +1,6 @@
 import { useMemo } from "react";
 
 export default function Banner({ series, margin }) {
-    console.log(series);
     const randomBanner = useMemo(() => {
         let formattedSeriesName = "";
         let formattedAnimeTitle = "";

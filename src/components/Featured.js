@@ -1,3 +1,4 @@
+"use client"
 import React, { useEffect, useState } from 'react'
 import Card from './Card.js'
 import axios from 'axios';
@@ -12,7 +13,6 @@ export default function Featured() {
                 const response = await axios.get("/api/featured");
                 setFeaturedSeries(response.data);
                 setFetching(false);
-                console.log(response.data)
             } catch (error) {
                 console.log(error);
             }
