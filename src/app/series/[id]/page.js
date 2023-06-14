@@ -1,4 +1,6 @@
 "use client";
+import Banner from "@/components/Banner.js";
+import Filter from "@/components/Filter.js";
 import axios from "axios";
 import Image from "next/image";
 import { useState, useEffect, useMemo } from "react";
@@ -21,7 +23,6 @@ export default function AnimeDetail({ params }) {
     async function fetchSeries() {
       try {
         const data = await getData(params.id);
-        console.log(data)
         if (data && data.anime) {
           data.anime.forEach((anime) => {
             const seriesTitle = data.title.toLowerCase().replace(/\s/g, "-");
@@ -30,7 +31,6 @@ export default function AnimeDetail({ params }) {
             anime.banner = `/img/webp/${seriesTitle}/${animeTitle}/banner.webp`;
           });
         }
-        console.log(data);
         setSeries(data);
       } catch (error) {
         console.log(error);
@@ -39,26 +39,11 @@ export default function AnimeDetail({ params }) {
     fetchSeries();
   }, [params.id]);
 
+  const isOrderTypeAvailable = (orderType) => {
+    return series.seriesOrder.some((order) => order.order_type === orderType);
+  };
+
   const seriesName = useMemo(() => series ? series.serie_name.toLowerCase().replace(/\s/g, '-') : '', [series]);
-  const randomBanner = useMemo(() => {
-    if (series && series.animes.length > 0) {
-      let randomBannerIndex = Math.floor(Math.random() * series.animes.length);
-      let animeTitle = series.animes[randomBannerIndex].title.toLowerCase().replace(/\s/g, '-');
-      let banner = series.animes[randomBannerIndex].banner;
-
-      // Retry with a different random index if the banner is empty
-      while (!banner) {
-        randomBannerIndex = Math.floor(Math.random() * series.animes.length);
-        animeTitle = series.animes[randomBannerIndex].title.toLowerCase().replace(/\s/g, '-');
-        banner = series.animes[randomBannerIndex].banner;
-      }
-
-      return `/img/anime/${seriesName}/${animeTitle}/${banner}`;
-    }
-
-    return '';
-  }, [series, seriesName]);
-
 
   const randomPoster = useMemo(() => {
     if (series && series.animes.length > 0) {
@@ -108,40 +93,6 @@ export default function AnimeDetail({ params }) {
     };
   }, [isMobile]);
 
-  const Filter = ({ activeFilter, setActiveFilter }) => {
-    const isOrderTypeAvailable = (orderType) => {
-      return series.seriesOrder.some((order) => order.order_type === orderType);
-    };
-    return (
-      <div id="filters" className="flex flex-col">
-        <p className="hidden sm:block text-lg font-gilroy text-subtext">Order</p>
-        <div className="flex flex-row items-center justify-around w-full mb-4">
-          <button
-            className={`${activeFilter === 'Release' ? '' : 'btn-inactive'} btn`}
-            onClick={() => setActiveFilter('Release')}
-            disabled={!isOrderTypeAvailable('Release')}
-          >
-            Release
-          </button>
-          <button
-            className={`${activeFilter === 'Chronological' ? '' : 'btn-inactive'} btn mx-2`}
-            onClick={() => setActiveFilter('Chronological')}
-            disabled={!isOrderTypeAvailable('Chronological')}
-          >
-            Chronicle
-          </button>
-          <button
-            className={`${activeFilter === 'Community' ? '' : 'btn-inactive'} btn`}
-            onClick={() => setActiveFilter('Community')}
-            disabled={!isOrderTypeAvailable('Community')}
-          >
-            Community
-          </button>
-        </div>
-      </div>
-    );
-  };
-
   if (!series) {
     return (
       <div className="flex items-center justify-center min-h-screen">
@@ -153,13 +104,7 @@ export default function AnimeDetail({ params }) {
   return (
     <main>
       <div className="container">
-        <div
-          className="flex flex-col items-center justify-between mb-12 mt-28 w-full h-36 bg-cover bg-no-repeat"
-          style={{
-            backgroundPositionY: `calc(40% + -${y / 2}px)`,
-            backgroundImage: series ? `url(${randomBanner})` : "none"
-          }}
-        />
+        <Banner series={series} margin="mb-12 mt-28" />
         <div className="container flex flex-row mb-24">
           <div id="poster" className="flex-initial">
             <Image
@@ -169,20 +114,24 @@ export default function AnimeDetail({ params }) {
               width={250}
               height={350}
             />
-            {!isMobile && <Filter activeFilter={activeFilter} setActiveFilter={setActiveFilter} />}
+            {!isMobile && (<Filter
+              activeFilter={activeFilter}
+              setActiveFilter={setActiveFilter}
+              isOrderTypeAvailable={isOrderTypeAvailable}
+            />)}
           </div>
           <div id="order" className="flex-1 md:ml-6">
-            <p className="font-japanese text-center text-4xl md:mb-8">{series.title} Watch Order</p>
-            {isMobile && <Filter activeFilter={activeFilter} setActiveFilter={setActiveFilter} />}
+            <p className="font-japanese text-center text-4xl mb-4 md:mb-8">{series.title} Watch Order</p>
+            {isMobile && (<Filter
+              activeFilter={activeFilter}
+              setActiveFilter={setActiveFilter}
+              isOrderTypeAvailable={isOrderTypeAvailable}
+            />)}
             <div className="flex flex-col flex-wrap items-center justify-center md:justify-start w-full pb-8">
               {/* Display anime order based on activeFilter */}
               {series.seriesOrder.map((order) => {
-                console.log(order.order_type);
-                console.log(activeFilter);
-                console.log(order.seriesOrderItems);
                 if (order.order_type === activeFilter) {
                   return order.seriesOrderItems.map((serieOrder) => {
-                    console.log(serieOrder.anime);
                     return (
                       <div key={serieOrder.anime.anime_id} className="flex flex-row items-center justify-center w-full mb-4 sm:mb-0 md:m-6">
                         <Image
@@ -195,9 +144,9 @@ export default function AnimeDetail({ params }) {
                         <div className="flex-1">
                           <p className="text-center md:text-start md:text-2xl">{serieOrder.anime.title}</p>
                           <p className="text-center md:text-start md:text-xl text-subtext font-extrabold">
-                            { serieOrder.fromEpisode !== serieOrder.toEpisode ?
-                            `Episode ${serieOrder.fromEpisode} - ${serieOrder.toEpisode}` :
-                            `Episode ${serieOrder.fromEpisode}`
+                            {serieOrder.fromEpisode !== serieOrder.toEpisode ?
+                              `Episode ${serieOrder.fromEpisode} - ${serieOrder.toEpisode}` :
+                              `Episode ${serieOrder.fromEpisode}`
                             }
                           </p>
                         </div>
