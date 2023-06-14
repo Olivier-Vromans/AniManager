@@ -46,7 +46,6 @@ enum AnimeType {
 model Genre {
   genre_id   Int          @id @default(autoincrement())
   genre_name String       @unique
-  url        String       @unique
   count      Int          @default(0)
   animes     Anime[]
   animeGenre AnimeGenre[]
