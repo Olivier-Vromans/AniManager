@@ -2,7 +2,7 @@
 @import "tailwindcss/components";
 @import "tailwindcss/utilities";
 
-@layer base{
+@layer base {
   @font-face {
     font-family: japanese;
     src: url(/font/JAPANESE_2020.ttf);
@@ -19,31 +19,30 @@
   }
 }
 
-@layer components{
+@layer components {
   .btn {
-    @apply py-2 px-4 rounded-sm text-white bg-btn
+    @apply py-2 px-4 rounded-sm text-white bg-btn;
   }
 
   .btn-secondary {
-    @apply btn font-bold rounded-full py-4 px-8 tracking-wider
+    @apply btn font-bold rounded-full py-4 px-8 tracking-wider;
   }
   .btn-inactive {
-    @apply btn opacity-60
+    @apply btn opacity-60;
   }
   .btn:focus,
-  .btn:active{
-    @apply opacity-100
+  .btn:active {
+    @apply opacity-100;
   }
   .btn:hover {
-    @apply opacity-80 transition duration-200
+    @apply opacity-80 transition duration-200;
   }
   .btn:disabled {
-    @apply opacity-40 cursor-not-allowed
+    @apply opacity-40 cursor-not-allowed;
   }
-
 }
 
-*{
+* {
   font-family: gilroy, sans-serif;
   padding: 0;
   margin: 0;
@@ -51,24 +50,11 @@
 
 body {
   color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+  background: linear-gradient(to bottom, transparent, rgb(var(--background-end-rgb))) rgb(var(--background-start-rgb));
 }
 
 :root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 255, 255, 255;
-  --background-end-rgb: 214, 219, 220;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
-  }
+  --foreground-rgb: 255, 255, 255;
+  --background-start-rgb: 0, 0, 0;
+  --background-end-rgb: 0, 0, 0;
 }
