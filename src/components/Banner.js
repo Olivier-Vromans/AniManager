@@ -5,7 +5,6 @@ export default function Banner({ series, margin }) {
     const isMobile = useIsMobile();
     const [y, setY] = useState(0);
 
-    console.log(series);
     useEffect(() => {
         const handleScroll = () => {
             setY(window.scrollY);
@@ -41,7 +40,6 @@ export default function Banner({ series, margin }) {
             if (seriesOrderItems && seriesOrderItems.length > 0) {
                 const randomAnimeIndex = Math.floor(Math.random() * availableSeries.length);
                 const anime = availableSeries[randomAnimeIndex].anime;
-                console.log(anime)
 
                 formattedSeriesName = series.serie_name.toLowerCase().replace(/\s/g, "-");
                 formattedAnimeTitle = anime.title.toLowerCase().replace(/\s/g, "-");
