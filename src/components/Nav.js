@@ -40,9 +40,10 @@ export default function Nav({ metadata }) {
                             </a>
                         </>
                     ) : (
-                        <a href="/auth/signin" className="btn mx-2 md:mx-3 text-sm">
-                            Sign In
-                        </a>
+                        null
+                        // <a href="/auth/signin" className="btn mx-2 md:mx-3 text-sm">
+                        //     Sign In
+                        // </a>
                     )}
                     {user && user.role === 'ADMIN' && (
                         <a href="/admin" className="mx-2 md:mx-3 object-center flex flex-col items-center ">
