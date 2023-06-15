@@ -9,9 +9,11 @@ export default function Banner({ series, margin }) {
             const availableSeries = series.filter((s) => s.banner !== null && s.banner !== "");
             const randomBannerIndex = Math.floor(Math.random() * availableSeries.length);
 
-            if (availableSeries[randomBannerIndex].series) {
+            if (availableSeries[randomBannerIndex]?.series) {
                 formattedSeriesName = availableSeries[randomBannerIndex].series.serie_name.toLowerCase().replace(/\s/g, "-");
                 formattedAnimeTitle = availableSeries[randomBannerIndex].title.toLowerCase().replace(/\s/g, "-");
+            }else{
+                return null
             }
         } else if (typeof series === "object") {
             const seriesOrderItems = series.seriesOrder[0]?.seriesOrderItems;
