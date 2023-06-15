@@ -1,6 +1,20 @@
-import { useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 export default function Banner({ series, margin }) {
+    const [y, setY] = useState(0);
+
+    useEffect(() => {
+        const handleScroll = () => {
+            setY(window.scrollY);
+        };
+
+        window.addEventListener("scroll", handleScroll, { passive: true });
+
+        return () => {
+            window.removeEventListener("scroll", handleScroll);
+        };
+    }, []);
+
     const randomBanner = useMemo(() => {
         let formattedSeriesName = "";
         let formattedAnimeTitle = "";
@@ -35,7 +49,8 @@ export default function Banner({ series, margin }) {
         <div
             className={`flex flex-col items-center justify-between w-full h-36 bg-cover bg-no-repeat ${margin}`}
             style={{
-                backgroundImage: randomBanner !== "" ? `url(${randomBanner})` : "none"
+                backgroundImage: randomBanner !== "" ? `url(${randomBanner})` : "none",
+                backgroundPositionY: `calc(40% + -${y / 2}px)`,
             }}
         />
     );
