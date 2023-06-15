@@ -5,6 +5,7 @@ generator client {
 datasource db {
   provider = "mysql"
   url      = env("DATABASE_URL")
+  shadowDatabaseUrl = env("SHADOW_DATABASE_URL")
 }
 
 model Series {
@@ -28,10 +29,9 @@ model Anime {
   poster           String?
   banner           String?
   type             AnimeType
-  genres           Genre[]
+  genres           AnimeGenre[]
   series           Series            @relation(fields: [serie_id], references: [serie_id])
   episodes         Episode[]
-  animeGenre       AnimeGenre[]
   seriesOrderItems SeriesOrderItem[]
 }
 
@@ -46,9 +46,16 @@ enum AnimeType {
 model Genre {
   genre_id   Int          @id @default(autoincrement())
   genre_name String       @unique
-  count      Int          @default(0)
-  animes     Anime[]
-  animeGenre AnimeGenre[]
+  animes     AnimeGenre[]
+}
+
+model AnimeGenre {
+  anime_id Int
+  genre_id Int
+  Anime    Anime  @relation(fields: [anime_id], references: [anime_id])
+  Genre    Genre  @relation(fields: [genre_id], references: [genre_id])
+
+  @@id([anime_id, genre_id])
 }
 
 model SerieOrder {
@@ -72,15 +79,6 @@ model Episode {
   anime          Anime   @relation(fields: [anime_id], references: [anime_id])
 
   @@id([anime_id, episode_number])
-}
-
-model AnimeGenre {
-  anime_id Int
-  genre_id Int
-  anime    Anime @relation(fields: [anime_id], references: [anime_id])
-  genre    Genre @relation(fields: [genre_id], references: [genre_id])
-
-  @@id([anime_id, genre_id])
 }
 
 model Session {
