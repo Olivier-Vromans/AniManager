@@ -60,9 +60,9 @@ export default function Genre() {
             <div id="genres" className='flex flex-col '>
                 <div className='flex flex-col md:flex-row flex-wrap items-center justify-center md:justify-between w-full pb-8'>
                     <h2 className="text-2xl md:text-3xl font-bold text-center lg:text-left font-japanese ">Popular Genres</h2>
-                    <a href='/genre' className='btn-secondary mt-4 md:mt-0'>
+                    {/* <a href='/genre' className='btn-secondary mt-4 md:mt-0'>
                         More Genres
-                    </a>
+                    </a> */}
                 </div>
                 <div className="grid gap-4 justify-items-center grid-cols-2 sm:grid-rows-2 md:grid-cols-3 md:grid-rows-1 lg:grid-cols-4 lg:grid-rows-1 xl:grid-cols-5 xl:grid-rows-1">
                     {shownGenres.map((genre) => (
