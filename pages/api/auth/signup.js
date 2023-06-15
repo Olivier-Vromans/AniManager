@@ -9,16 +9,22 @@ const signupUserSchema = z.object({
 
 export default async function signup(req, res) {
   const { username, password } = signupUserSchema.parse(req.body);
+  const { secret } = req.body;
+
+  if(secret !== process.env.SECRET) {
+    return res.status(400).json({ user: null, message: "Secret is not valid" });
+  }
   const user = await prisma.user.findUnique({
     where: { username: username },
   });
+
   if (user) {
     return res.status(400).json({ user: null, message: "Username already exists" });
   }
 
   const hashedPassword = await bcrypt.hash(password, 10);
 
-  const newUser = await prism.user.create({
+  const newUser = await prisma.user.create({
     data: {
       username,
       password: hashedPassword,
