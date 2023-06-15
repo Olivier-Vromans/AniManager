@@ -1,6 +1,8 @@
 import { useEffect, useMemo, useState } from "react";
+import { useIsMobile } from "./isMobile.js";
 
 export default function Banner({ series, margin }) {
+    const isMobile = useIsMobile();
     const [y, setY] = useState(0);
 
     useEffect(() => {
@@ -29,6 +31,7 @@ export default function Banner({ series, margin }) {
             }else{
                 return null
             }
+
         } else if (typeof series === "object") {
             const seriesOrderItems = series.seriesOrder[0]?.seriesOrderItems;
             if (seriesOrderItems && seriesOrderItems.length > 0) {
@@ -50,7 +53,7 @@ export default function Banner({ series, margin }) {
             className={`flex flex-col items-center justify-between w-full h-36 bg-cover bg-no-repeat ${margin}`}
             style={{
                 backgroundImage: randomBanner !== "" ? `url(${randomBanner})` : "none",
-                backgroundPositionY: `calc(40% + -${y / 2}px)`,
+                backgroundPositionY: `${isMobile ? null : `calc(40% + -${y / 2}px)`}`,
             }}
         />
     );

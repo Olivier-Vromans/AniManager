@@ -1,4 +1,4 @@
--- Active: 1676564627043@@127.0.0.1@3306@animanager
+-- Active: 1686139147299@@aws.connect.psdb.cloud@3306@animanager
 -- Use the database
 USE animanager;
 
@@ -20,22 +20,49 @@ INSERT INTO Anime (serie_id, title, description, release_date, is_dubbed, option
   ((SELECT serie_id FROM Series WHERE serie_name = 'Code Geass'), 'Lelouch of the Rebellion', 'No description available yet. Check back later!', NULL, false, false, 'poster.webp', 'banner.webp', 'TV'),
   ((SELECT serie_id FROM Series WHERE serie_name = 'Code Geass'), 'Lelouch of the Rebellion R2', 'No description available yet. Check back later!', NULL, false, false, 'poster.webp', 'banner.webp', 'TV');
 
-INSERT INTO Genre (genre_name, url, count) VALUES
-  ('Action', 'action', 0),
-  ('Supernatural', 'supernatural', 0),
-  ('Mecha', 'mecha', 0);
+INSERT INTO Genre (genre_name) VALUES
+  ('Isekai'),
+  ('Drama'),
+  ('Action'),
+  ('Romance'),
+  ('Horror'),
+  ('Adventure'),
+  ('Fantasy'),
+  ('Comedy'),
+  ('Sci-Fi');
 
 INSERT INTO AnimeGenre (anime_id, genre_id) VALUES
   ((SELECT anime_id FROM Anime WHERE title = 'Naruto'), (SELECT genre_id FROM Genre WHERE genre_name = 'Action')),
-  ((SELECT anime_id FROM Anime WHERE title = 'Naruto'), (SELECT genre_id FROM Genre WHERE genre_name = 'Supernatural')),
-  ((SELECT anime_id FROM Anime WHERE title = 'Naruto'), (SELECT genre_id FROM Genre WHERE genre_name = 'Mecha'));
+  ((SELECT anime_id FROM Anime WHERE title = 'Naruto'), (SELECT genre_id FROM Genre WHERE genre_name = 'Adventure')),
+  ((SELECT anime_id FROM Anime WHERE title = 'Naruto'), (SELECT genre_id FROM Genre WHERE genre_name = 'Fantasy')),
+  ((SELECT anime_id FROM Anime WHERE title = 'Find the Four-Leaf Red Clover! OVA'), (SELECT genre_id FROM Genre WHERE genre_name = 'Adventure')),
+  ((SELECT anime_id FROM Anime WHERE title = 'Find the Four-Leaf Red Clover! OVA'), (SELECT genre_id FROM Genre WHERE genre_name = 'Comedy')),
+
+  ((SELECT anime_id FROM Anime WHERE title = 'Demon Slayer Kimetsu no Yaiba'), (SELECT genre_id FROM Genre WHERE genre_name = 'Action')),
+  ((SELECT anime_id FROM Anime WHERE title = 'Demon Slayer Kimetsu no Yaiba'), (SELECT genre_id FROM Genre WHERE genre_name = 'Fantasy')),
+
+  ((SELECT anime_id FROM Anime WHERE title = 'Demon Slayer Kimetsu no Yaiba Mugen Train Arc'), (SELECT genre_id FROM Genre WHERE genre_name = 'Action')),
+  ((SELECT anime_id FROM Anime WHERE title = 'Demon Slayer Kimetsu no Yaiba Mugen Train Arc'), (SELECT genre_id FROM Genre Where genre_name = 'Fantasy')),
+
+  ((SELECT anime_id FROM Anime WHERE title = 'Demon Slayer Kimetsu no Yaiba Entertainment District Arc'), (SELECT genre_id FROM Genre Where genre_name = 'Action')),
+  ((SELECT anime_id FROM Anime WHERE title = 'Demon Slayer Kimetsu no Yaiba Entertainment District Arc'), (SELECT genre_id FROM Genre Where genre_name = 'Fantasy')),
+
+  ((SELECT anime_id FROM Anime WHERE title = 'Demon Slayer Kimetsu no Yaiba Swordsmith Village Arc'), (SELECT genre_id FROM Genre Where genre_name = 'Action')),
+  ((SELECT anime_id FROM Anime WHERE title = 'Demon Slayer Kimetsu no Yaiba Swordsmith Village Arc'), (SELECT genre_id FROM Genre Where genre_name = 'Fantasy')),
+
+  ((SELECT anime_id FROM Anime WHERE title = 'Lelouch of the Rebellion'), (SELECT genre_id FROM Genre Where genre_name = 'Action')),
+  ((SELECT anime_id FROM Anime WHERE title = 'Lelouch of the Rebellion'), (SELECT genre_id FROM Genre Where genre_name = 'Drama')),
+  ((SELECT anime_id FROM Anime WHERE title = 'Lelouch of the Rebellion'), (SELECT genre_id FROM Genre Where genre_name = 'Sci-Fi')),
+
+  ((SELECT anime_id FROM Anime WHERE title = 'Lelouch of the Rebellion R2'), (SELECT genre_id FROM Genre Where genre_name = 'Action')),
+  ((SELECT anime_id FROM Anime WHERE title = 'Lelouch of the Rebellion R2'), (SELECT genre_id FROM Genre Where genre_name = 'Drama')),
+  ((SELECT anime_id FROM Anime WHERE title = 'Lelouch of the Rebellion R2'), (SELECT genre_id FROM Genre Where genre_name = 'Sci-Fi'));
 
 INSERT INTO SerieOrder (order_id, serie_id, order_type) VALUES
   (1, (SELECT serie_id FROM Series WHERE serie_name = 'Naruto'), 'Chronological'),
   (2, (SELECT serie_id FROM Series WHERE serie_name = 'Naruto'), 'Release'),
   (3, (SELECT serie_id FROM Series WHERE serie_name = 'Demon Slayer'), 'Release'),
   (4, (SELECT serie_id FROM Series WHERE serie_name = 'Code Geass'), 'Release');
-
 
 INSERT INTO Episode (anime_id, episode_number, is_filler) VALUES
   ((SELECT anime_id FROM Anime WHERE title = 'Naruto'), 1, false),
