@@ -5,6 +5,7 @@ export default function Banner({ series, margin }) {
     const isMobile = useIsMobile();
     const [y, setY] = useState(0);
 
+    console.log(series);
     useEffect(() => {
         const handleScroll = () => {
             setY(window.scrollY);
@@ -24,6 +25,7 @@ export default function Banner({ series, margin }) {
         if (Array.isArray(series)) {
             const availableSeries = series.filter((s) => s.banner !== null && s.banner !== "");
             const randomBannerIndex = Math.floor(Math.random() * availableSeries.length);
+            console.log(availableSeries);
 
             if (availableSeries[randomBannerIndex]?.series) {
                 formattedSeriesName = availableSeries[randomBannerIndex].series.serie_name.toLowerCase().replace(/\s/g, "-");
@@ -34,9 +36,12 @@ export default function Banner({ series, margin }) {
 
         } else if (typeof series === "object") {
             const seriesOrderItems = series.seriesOrder[0]?.seriesOrderItems;
+            const availableSeries = seriesOrderItems.filter((s) => s.anime.banner !== null && s.anime.banner !== "");
+
             if (seriesOrderItems && seriesOrderItems.length > 0) {
-                const randomAnimeIndex = Math.floor(Math.random() * seriesOrderItems.length);
-                const anime = seriesOrderItems[randomAnimeIndex].anime;
+                const randomAnimeIndex = Math.floor(Math.random() * availableSeries.length);
+                const anime = availableSeries[randomAnimeIndex].anime;
+                console.log(anime)
 
                 formattedSeriesName = series.serie_name.toLowerCase().replace(/\s/g, "-");
                 formattedAnimeTitle = anime.title.toLowerCase().replace(/\s/g, "-");
