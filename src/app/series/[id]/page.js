@@ -1,6 +1,8 @@
 "use client";
 import Banner from "@/components/Banner.js";
-import Filter from "@/components/Filter.js";
+import Order from "@/components/Order.js";
+import ShowFiller from "@/components/ShowFiller.js";
+import { useIsMobile } from "@/components/isMobile.js";
 import axios from "axios";
 import Image from "next/image";
 import { useState, useEffect, useMemo } from "react";
@@ -17,6 +19,8 @@ async function getData(serieId) {
 export default function AnimeDetail({ params }) {
   const [activeFilter, setActiveFilter] = useState("Release");
   const [series, setSeries] = useState(null);
+  const [isFillersVisible, setIsFillersVisible] = useState(true);
+  const isMobile = useIsMobile();
 
   useEffect(() => {
     async function fetchSeries() {
@@ -30,6 +34,7 @@ export default function AnimeDetail({ params }) {
             anime.banner = `/img/webp/${seriesTitle}/${animeTitle}/banner.webp`;
           });
         }
+        console.log(data);
         setSeries(data);
       } catch (error) {
         console.log(error);
@@ -61,37 +66,6 @@ export default function AnimeDetail({ params }) {
     return '';
   }, [series, seriesName]);
 
-  const [y, setY] = useState(0);
-  const [isMobile, setIsMobile] = useState(false);
-
-  useEffect(() => {
-    // Determine if the user is scrolling up or down and adjust the banner accordingly
-    const handleResize = () => {
-      setIsMobile(window.innerWidth <= 768); // Adjust the breakpoint if needed
-    };
-
-    handleResize(); // Set initial screen size
-    window.addEventListener('resize', handleResize); // Update screen size on resize
-
-    return () => {
-      window.removeEventListener('resize', handleResize); // Clean up event listener
-    };
-  }, [series]);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      setY(Math.min(window.scrollY, 480));
-    };
-
-    if (!isMobile) {
-      window.addEventListener('scroll', handleScroll);
-    }
-
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
-    };
-  }, [isMobile]);
-
   if (!series) {
     return (
       <div className="flex items-center justify-center min-h-screen">
@@ -99,6 +73,15 @@ export default function AnimeDetail({ params }) {
       </div>
     );
   }
+
+  // Function to filter fillers based on isFillersVisible state
+  const filterFillers = (items) => {
+    if (isFillersVisible) {
+      return items;
+    } else {
+      return items.filter((item) => !item.anime.episodes.some((episode) => episode.is_filler));
+    }
+  };
 
   return (
     <main>
@@ -113,41 +96,71 @@ export default function AnimeDetail({ params }) {
               width={250}
               height={350}
             />
-            {!isMobile && (<Filter
-              activeFilter={activeFilter}
-              setActiveFilter={setActiveFilter}
-              isOrderTypeAvailable={isOrderTypeAvailable}
-            />)}
+            {!isMobile && (
+              <>
+                <Order
+                  activeFilter={activeFilter}
+                  setActiveFilter={setActiveFilter}
+                  isOrderTypeAvailable={isOrderTypeAvailable}
+                />
+                <div id="filters" className="flex flex-col">
+                  <p className="hidden sm:block text-lg font-gilroy text-subtext">Filter</p>
+                  <div className="flex flex-row items-center justify-around w-full mb-4">
+                    <button className={`btn mx-2 w-full ${isFillersVisible ? "" : "btn-inactive"}`}
+                      onClick={() => setIsFillersVisible(!isFillersVisible)}>
+                      ARC
+                    </button>
+                    <button className={`btn mx-2 w-full ${isFillersVisible ? "btn-inactive" : ""}`}
+                      onClick={() => setIsFillersVisible(!isFillersVisible)}>
+                      Filler
+                    </button>
+                  </div>
+                </div>
+              </>
+            )}
           </div>
           <div id="order" className="flex-1 md:ml-6">
             <p className="font-japanese text-center text-4xl mb-4 md:mb-8">{series.title} Watch Order</p>
-            {isMobile && (<Filter
-              activeFilter={activeFilter}
-              setActiveFilter={setActiveFilter}
-              isOrderTypeAvailable={isOrderTypeAvailable}
-            />)}
+            {isMobile && (
+              <>
+                <Order
+                  activeFilter={activeFilter}
+                  setActiveFilter={setActiveFilter}
+                  isOrderTypeAvailable={isOrderTypeAvailable}
+                />
+                <div id="filters" className="flex flex-col">
+                  <p className="hidden sm:block text-lg font-gilroy text-subtext">Filter</p>
+                  <div className="flex flex-row items-center justify-around w-full mb-4">
+                    <button className={`btn mx-2 w-full ${isFillersVisible ? "" : "btn-inactive"}`}
+                      onClick={() => setIsFillersVisible(!isFillersVisible)}>
+                      ARC
+                    </button>
+                    <button className={`btn mx-2 w-full ${isFillersVisible ? "btn-inactive" : ""}`}
+                      onClick={() => setIsFillersVisible(!isFillersVisible)}>
+                      Filler
+                    </button>
+                  </div>
+                </div>
+              </>
+            )}
             <div className="flex flex-col flex-wrap items-center justify-center md:justify-start w-full pb-8">
               {/* Display anime order based on activeFilter */}
               {series.seriesOrder.map((order) => {
                 if (order.order_type === activeFilter) {
                   return order.seriesOrderItems.map((serieOrder) => {
                     return (
-                      <div key={serieOrder.anime.anime_id} className="flex flex-row items-center justify-center w-full mb-4 sm:mb-0 md:m-6">
+                      <div key={`${serieOrder.order}-${serieOrder.anime.anime_id}`} className="flex flex-row items-center justify-center w-full mb-4 sm:mb-0 md:m-6">
                         <Image
                           className="w-32 h-32 md:w-1/2 lg:w-1/6 object-contain"
                           src={serieOrder.anime.poster ? `/img/anime/${series.serie_name.toLowerCase().replace(/\s/g, '-')}/${serieOrder.anime.title.toLowerCase().replace(/\s/g, '-')}/${serieOrder.anime.poster}` : `/img/anime/${series.serie_name.toLowerCase().replace(/\s/g, '-')}/${series.poster}`}
                           width={100}
                           height={100}
                           loader={({ src, width, quality }) => `${src}?w=${width}&q=${quality || 75}`}
+                          alt={`${serieOrder.anime.title} Poster`}
                         />
                         <div className="flex-1">
                           <p className="text-center md:text-start md:text-2xl">{serieOrder.anime.title}</p>
-                          <p className="text-center md:text-start md:text-xl text-subtext font-extrabold">
-                            {serieOrder.fromEpisode !== serieOrder.toEpisode ?
-                              `Episode ${serieOrder.fromEpisode} - ${serieOrder.toEpisode}` :
-                              `Episode ${serieOrder.fromEpisode}`
-                            }
-                          </p>
+                          <ShowFiller anime={serieOrder} isFillersVisible={isFillersVisible} />
                         </div>
                       </div>
                     );

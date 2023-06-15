@@ -1,4 +1,4 @@
-export default function Filter({ activeFilter, setActiveFilter, isOrderTypeAvailable }) {
+export default function Order({ activeFilter, setActiveFilter, isOrderTypeAvailable }) {
     return (
       <div id="filters" className="flex flex-col">
         <p className="hidden sm:block text-lg font-gilroy text-subtext">Order</p>
