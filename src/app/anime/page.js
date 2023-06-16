@@ -59,9 +59,9 @@ export default function Anime() {
         <Banner series={anime} margin="my-8" />
         <div className="grid gap-4 justify-items-center grid-cols-2 sm:grid-rows-2 md:grid-cols-3 md:grid-rows-1 lg:grid-cols-4 lg:grid-rows-1 xl:grid-cols-5 xl:grid-rows-1 mb-8">
           {anime.map((a) => (
-            <a href={`/series/${a.series.serie_id}`} key={a.series.serie_id} className="flex flex-col justify-center items-center w-44 h-64 lg:w-52 lg:h-64 2xl:w-64 2xl:h-96 relative">
+            <a href={`/series/${a.series.serie_id}`} key={a.series.serie_id} className="flex flex-col justify-center items-center w-44 h-64 lg:w-52 lg:h-64 2xl:w-64 2xl:h-96 relative ">
               <Image
-                className="opacity-60 rounded-xl object-cover"
+                className="opacity-60 rounded-xl object-cover blur-[1.5px]"
                 src={
                   `/img/anime/${a.poster !== null ? `${a.series.serie_name.toLowerCase().replace(/\s/g, "-")}/${a.title.toLowerCase().replace(/\s/g, "-")}/${a.poster}` : `${a.series.serie_name.toLowerCase().replace(/\s/g, "-")}/${a.series.poster}`}`
                 }

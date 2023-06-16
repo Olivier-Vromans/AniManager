@@ -33,13 +33,13 @@ function ShowFiller({ anime, isFillersVisible }) {
       ) {
         const endRange = episode.episode_number;
         episodeRanges.push(
-          startRange === endRange ? startRange.toString() : `${startRange} - ${endRange}`
+          startRange === endRange ? startRange.toString() : `${startRange}-${endRange}`
         );
         startRange = null;
       } else if (!nextEpisode || i === filteredEpisodes.length - 1) {
         const endRange = episode.episode_number;
         episodeRanges.push(
-          startRange === endRange ? startRange.toString() : `${startRange} - ${endRange}`
+          startRange === endRange ? startRange.toString() : `${startRange}-${endRange}`
         );
         startRange = null;
       }
