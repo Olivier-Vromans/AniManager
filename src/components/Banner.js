@@ -24,7 +24,6 @@ export default function Banner({ series, margin }) {
         if (Array.isArray(series)) {
             const availableSeries = series.filter((s) => s.banner !== null && s.banner !== "");
             const randomBannerIndex = Math.floor(Math.random() * availableSeries.length);
-            console.log(availableSeries);
 
             if (availableSeries[randomBannerIndex]?.series) {
                 formattedSeriesName = availableSeries[randomBannerIndex].series.serie_name.toLowerCase().replace(/\s/g, "-");

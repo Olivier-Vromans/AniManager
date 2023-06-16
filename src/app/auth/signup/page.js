@@ -17,7 +17,6 @@ export default function SignUPage() {
     setError(null);
 
     try {
-      console.log(secret);
       const response = await axios.post('/api/auth/signup', {
         username: username,
         password: password,

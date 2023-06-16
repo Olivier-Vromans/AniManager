@@ -34,7 +34,6 @@ export default function AnimeDetail({ params }) {
             anime.banner = `/img/webp/${seriesTitle}/${animeTitle}/banner.webp`;
           });
         }
-        console.log(data);
         setSeries(data);
       } catch (error) {
         console.log(error);
