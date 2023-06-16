@@ -39,35 +39,36 @@ export default async function handler(req, res) {
       serie_name: serie.serie_name,
       serieOrders: serie.seriesOrder
         ? serie.seriesOrder.map((order) => ({
-            order_id: order.order_id,
-            order_type: order.order_type,
-            animeOrder: order.seriesOrderItems.map((seriesOrderItem) => ({
-              order_index: seriesOrderItem.order,
-              series_id: seriesOrderItem.serie_id,
-              animes: {
-                anime_id: seriesOrderItem.anime.anime_id,
-                title: seriesOrderItem.anime.title,
-                description: seriesOrderItem.anime.description,
-                release_date: seriesOrderItem.anime.release_date,
-                is_dubbed: seriesOrderItem.anime.is_dubbed,
-                optional: seriesOrderItem.anime.optional,
-                poster: seriesOrderItem.anime.poster,
-                banner: seriesOrderItem.anime.banner,
-                type: seriesOrderItem.anime.type,
-                genres: seriesOrderItem.anime.genres.map((genre) => ({
-                  genre_id: genre.genre_id,
-                  genre_name: genre.genre_name,
-                  url: genre.url,
-                  count: genre.count,
-                })),
-                episodes: seriesOrderItem.anime.episodes.map((episode) => ({
-                  episode_id: episode.episode_id,
-                  episode_number: episode.episode_number,
-                  is_filler: episode.is_filler,
-                })),
-              },
-            })),
-          }))
+          order_id: order.order_id,
+          order_type: order.order_type,
+          seriesOrderItem: order.seriesOrderItems.map((seriesOrderItem) => ({
+            order_index: seriesOrderItem.order,
+            series_id: seriesOrderItem.serie_id,
+            order: seriesOrderItem.order,
+            animes: {
+              anime_id: seriesOrderItem.anime.anime_id,
+              title: seriesOrderItem.anime.title,
+              description: seriesOrderItem.anime.description,
+              release_date: seriesOrderItem.anime.release_date,
+              is_dubbed: seriesOrderItem.anime.is_dubbed,
+              optional: seriesOrderItem.anime.optional,
+              poster: seriesOrderItem.anime.poster,
+              banner: seriesOrderItem.anime.banner,
+              type: seriesOrderItem.anime.type,
+              genres: seriesOrderItem.anime.genres.map((genre) => ({
+                genre_id: genre.genre_id,
+                genre_name: genre.genre_name,
+                url: genre.url,
+                count: genre.count,
+              })),
+              episodes: seriesOrderItem.anime.episodes.map((episode) => ({
+                episode_id: episode.episode_id,
+                episode_number: episode.episode_number,
+                is_filler: episode.is_filler,
+              })),
+            },
+          })),
+        }))
         : [],
       animes: serie.animes.map((anime) => ({
         anime_id: anime.anime_id,
