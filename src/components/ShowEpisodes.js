@@ -1,6 +1,6 @@
 import React from "react";
 
-function ShowFiller({ anime, isFillersVisible }) {
+function ShowEpisodes({ anime, isFillersVisible }) {
   const { fromEpisode, toEpisode } = anime;
   const episodes = anime.anime.episodes;
 
@@ -49,10 +49,10 @@ function ShowFiller({ anime, isFillersVisible }) {
   };
 
   return (
-    <p className="text-center md:text-start md:text-xl text-subtext font-extrabold">
+    <p className="text-center md:text-start md:text-xl text-subtext font-bold">
       Episode {filterEpisodes()}
     </p>
   );
 }
 
-export default ShowFiller;
+export default ShowEpisodes;

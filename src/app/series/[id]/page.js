@@ -1,7 +1,7 @@
 "use client";
 import Banner from "@/components/Banner.js";
 import Order from "@/components/Order.js";
-import ShowFiller from "@/components/ShowFiller.js";
+import ShowEpisodes from "@/components/ShowEpisodes.js";
 import { useIsMobile } from "@/components/isMobile.js";
 import axios from "axios";
 import Image from "next/image";
@@ -87,7 +87,7 @@ export default function AnimeDetail({ params }) {
       <div className="container">
         <Banner series={series} margin="mb-12 mt-28" />
         <div className="container flex flex-row mb-24">
-          <div id="poster" className="flex-initial">
+          <div id="poster" className="flex-initial flex flex-col">
             <Image
               className="md:mb-4 hidden md:block w-full"
               src={randomPoster}
@@ -103,7 +103,7 @@ export default function AnimeDetail({ params }) {
                   isOrderTypeAvailable={isOrderTypeAvailable}
                 />
                 <div id="filters" className="flex flex-col">
-                  <p className="hidden sm:block text-lg font-gilroy text-subtext">Filter</p>
+                  <p className="hidden sm:block text-lg font-gilroy text-subtext font-bold">Filter</p>
                   <div className="flex flex-row items-center justify-around w-full mb-4">
                     <button className={`btn mx-2 w-full ${isFillersVisible ? "" : "btn-inactive"}`}
                       onClick={() => setIsFillersVisible(!isFillersVisible)}>
@@ -128,7 +128,7 @@ export default function AnimeDetail({ params }) {
                   isOrderTypeAvailable={isOrderTypeAvailable}
                 />
                 <div id="filters" className="flex flex-col">
-                  <p className="hidden sm:block text-lg font-gilroy text-subtext">Filter</p>
+                  <p className="hidden sm:block text-lg font-gilroy text-subtext font-bold">Filter</p>
                   <div className="flex flex-row items-center justify-around w-full mb-4">
                     <button className={`btn mx-2 w-full ${isFillersVisible ? "" : "btn-inactive"}`}
                       onClick={() => setIsFillersVisible(!isFillersVisible)}>
@@ -159,7 +159,7 @@ export default function AnimeDetail({ params }) {
                         />
                         <div className="flex-1">
                           <p className="text-center md:text-start md:text-2xl">{serieOrder.anime.title}</p>
-                          <ShowFiller anime={serieOrder} isFillersVisible={isFillersVisible} />
+                          <ShowEpisodes anime={serieOrder} isFillersVisible={isFillersVisible} />
                         </div>
                       </div>
                     );
