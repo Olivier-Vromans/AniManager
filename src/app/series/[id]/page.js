@@ -65,6 +65,11 @@ export default function AnimeDetail({ params }) {
     return '';
   }, [series, seriesName]);
 
+  const handleToggleFillers = (newValue) => {
+    setIsFillersVisible((prevState) => (prevState === newValue ? prevState : !prevState));
+  };
+  
+
   if (!series) {
     return (
       <div className="flex items-center justify-center min-h-screen">
@@ -72,15 +77,6 @@ export default function AnimeDetail({ params }) {
       </div>
     );
   }
-
-  // Function to filter fillers based on isFillersVisible state
-  const filterFillers = (items) => {
-    if (isFillersVisible) {
-      return items;
-    } else {
-      return items.filter((item) => !item.anime.episodes.some((episode) => episode.is_filler));
-    }
-  };
 
   return (
     <main>
@@ -106,11 +102,11 @@ export default function AnimeDetail({ params }) {
                   <p className="hidden sm:block text-lg font-gilroy text-subtext font-bold">Filter</p>
                   <div className="flex flex-row items-center justify-around w-full mb-4">
                     <button className={`btn mx-2 w-full ${isFillersVisible ? "" : "btn-inactive"}`}
-                      onClick={() => setIsFillersVisible(!isFillersVisible)}>
+                      onClick={() => handleToggleFillers(true)}>
                       ARC
                     </button>
                     <button className={`btn mx-2 w-full ${isFillersVisible ? "btn-inactive" : ""}`}
-                      onClick={() => setIsFillersVisible(!isFillersVisible)}>
+                      onClick={() => handleToggleFillers(false)}>
                       Filler
                     </button>
                   </div>
