@@ -1,8 +1,8 @@
 export default function Order({ activeFilter, setActiveFilter, isOrderTypeAvailable }) {
   return (
-    <div id="filters" className="flex flex-col">
+    <div id="filters" className="flex flex-col ">
       <p className="hidden sm:block text-lg font-gilroy text-subtext font-bold">Order</p>
-      <div className="flex flex-row items-center justify-around w-full mb-4">
+      <div className="flex flex-row items-center justify-around w-full mb-4 flex-shrink-0">
         <button
           className={`btn w-full flex-1 mx-2 ${activeFilter === 'Release' ? '' : 'btn-inactive'} ${!isOrderTypeAvailable('Release') ? "hidden" : ""}`}
           onClick={() => setActiveFilter('Release')}
