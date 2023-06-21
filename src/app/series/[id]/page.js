@@ -83,7 +83,7 @@ export default function AnimeDetail({ params }) {
       <div className="container">
         <Banner series={series} margin="mb-12 mt-28" />
         <div className="container flex flex-row mb-24">
-          <div id="poster" className="flex-initial flex flex-col">
+          <div id="poster" className="flex-initial flex flex-col sm:1/4 md:w-1/4">
             <Image
               className="md:mb-4 hidden md:block w-full"
               src={randomPoster}
@@ -114,7 +114,7 @@ export default function AnimeDetail({ params }) {
               </>
             )}
           </div>
-          <div id="order" className="flex-1 md:ml-6">
+          <div id="order" className="flex-1 sm:w-2/4 md:3/4 md:ml-6">
             <p className="font-japanese text-center text-4xl mb-4 md:mb-8">{series.title} Watch Order</p>
             {isMobile && (
               <>
