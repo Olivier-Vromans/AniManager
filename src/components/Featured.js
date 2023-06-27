@@ -1,5 +1,5 @@
 "use client"
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useLayoutEffect, useState } from 'react'
 import Card from './Card.js'
 import axios from 'axios';
 import Skeleton, { SkeletonTheme } from 'react-loading-skeleton';
@@ -8,6 +8,7 @@ import 'react-loading-skeleton/dist/skeleton.css'
 export default function Featured() {
     const [featuredSeries, setFeaturedSeries] = useState(null);
     const [fetching, setFetching] = useState(true);
+    const [skeletonSize, setSkeletonSize] = useState({ width: 200, height: 250 });
 
     useEffect(() => {
         async function fetchViewingOrders() {
@@ -22,41 +23,32 @@ export default function Featured() {
         fetchViewingOrders();
     }, []);
 
-    const skeletonSize = {
-        height: 0,
-        width: 0,
-    };
+    useLayoutEffect(() => {
+        const calculateSkeletonSize = () => {
+            const width = typeof window !== 'undefined' ? window.innerWidth : 0;
 
-    const calculateSkeletonSize = () => {
-        if (window.innerWidth < 640) {
-            skeletonSize.height = 233;
-            skeletonSize.width = 144;
-        } else if (window.innerWidth < 768) {
-            skeletonSize.height = 280;
-            skeletonSize.width = 176;
-        } else if (window.innerWidth < 1280) {
-            skeletonSize.height = 250;
-            skeletonSize.width = 200;
-        } else {
-            skeletonSize.height = 500;
-            skeletonSize.width = 320;
-        }
-    };
+            if (width <= 640) {
+                return { height: 233, width: 144 };
+            } else if (width <= 768) {
+                return { height: 280, width: 176 };
+            } else if (width <= 1280) {
+                return { height: 250, width: 200 };
+            } else if (width <= 1536) {
+                return { height: 300, width: 240 };
+            } else {
+                return { height: 500, width: 320 }
+            }
 
-    // Call the function to calculate the initial skeleton size
-    calculateSkeletonSize();
-
-    // Update the skeleton size when the window is resized
-    useEffect(() => {
-        const handleResize = () => {
-            calculateSkeletonSize();
         };
 
-        window.addEventListener('resize', handleResize);
-
-        return () => {
-            window.removeEventListener('resize', handleResize);
+        const updateSkeletonSize = () => {
+            const size = calculateSkeletonSize();
+            setSkeletonSize(size);
         };
+
+        updateSkeletonSize();
+        window.addEventListener('resize', updateSkeletonSize);
+        return () => window.removeEventListener('resize', updateSkeletonSize);
     }, []);
 
 
@@ -64,13 +56,8 @@ export default function Featured() {
         <div id="featured" className="z-10 flex flex-row items-center justify-between w-full overflow-x-scroll sm:overflow-hidden">
             {fetching ? (
                 // Display Skeleton loading state when fetching
-                <SkeletonTheme baseColor='#0e0e0e' highlightColor="#000" inline >
-                    <Skeleton
-                        width={skeletonSize.width}
-                        height={skeletonSize.height}
-                        className="flex-shrink-0 mx-2 sm:mx-5"
-                        count={2}
-                    />
+                <SkeletonTheme baseColor='#0e0e0e' highlightColor='#000' inline >
+                    <Skeleton count={2} className='mx-2' style={{ width: skeletonSize.width, height: skeletonSize.height }} />
                 </SkeletonTheme>
             ) : (
                 // Render the Card components when data is available
