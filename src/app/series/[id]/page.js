@@ -68,7 +68,7 @@ export default function AnimeDetail({ params }) {
   const handleToggleFillers = (newValue) => {
     setIsFillersVisible((prevState) => (prevState === newValue ? prevState : !prevState));
   };
-  
+
 
   if (!series) {
     return (
@@ -83,7 +83,7 @@ export default function AnimeDetail({ params }) {
       <div className="container">
         <Banner series={series} margin="mb-12 mt-28" />
         <div className="container flex flex-row mb-24">
-          <div id="poster" className="flex-initial flex flex-col sm:1/4 md:w-1/4">
+          <div id="poster" className="flex-initial flex flex-col sm:w-1/4 md:w-1/5 sm:hidden md:block">
             <Image
               className="md:mb-4 hidden md:block w-full"
               src={randomPoster}
@@ -100,14 +100,16 @@ export default function AnimeDetail({ params }) {
                 />
                 <div id="filters" className="flex flex-col">
                   <p className="hidden sm:block text-lg font-gilroy text-subtext font-bold">Filter</p>
-                  <div className="flex flex-row items-center justify-around w-full mb-4">
-                    <button className={`btn mx-2 w-full ${isFillersVisible ? "" : "btn-inactive"}`}
+                  <div className="flex flex-row items-center justify-around w-full mb-4 gap-2">
+                    <button className={`btn w-full ${isFillersVisible ? "" : "btn-inactive"}`}
                       onClick={() => handleToggleFillers(true)}>
-                      ARC
+                      <p className="hidden xl:block">Only Arc</p>
+                      <p className="xl:hidden">Arc</p>
                     </button>
-                    <button className={`btn mx-2 w-full ${isFillersVisible ? "btn-inactive" : ""}`}
+                    <button className={`btn w-full ${isFillersVisible ? "btn-inactive" : ""}`}
                       onClick={() => handleToggleFillers(false)}>
-                      Filler
+                      <p className="hidden xl:block">With filler</p>
+                      <p className="xl:hidden">Filler</p>
                     </button>
                   </div>
                 </div>
