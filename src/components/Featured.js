@@ -57,7 +57,7 @@ export default function Featured() {
             {fetching ? (
                 // Display Skeleton loading state when fetching
                 <SkeletonTheme baseColor='#0e0e0e' highlightColor='#000' inline >
-                    <Skeleton count={2} className='mx-2' style={{ width: skeletonSize.width, height: skeletonSize.height }} />
+                    <Skeleton count={2} className='mx-2' borderRadius={24} style={{ width: skeletonSize.width, height: skeletonSize.height }} />
                 </SkeletonTheme>
             ) : (
                 // Render the Card components when data is available
