@@ -1,8 +1,18 @@
 import React from "react";
 
-function ShowEpisodes({ anime, isFillersVisible }) {
-  const { fromEpisode, toEpisode } = anime;
-  const episodes = anime.anime.episodes;
+function ShowEpisodes({ serieOrder, isFillersVisible }) {
+  console.log(serieOrder)
+  const { fromEpisode, toEpisode } = serieOrder;
+  const episodes = serieOrder.anime.episodes;
+
+
+  if(serieOrder.anime.type === 'Movie') {
+    return (
+      <p className="text-center md:text-start md:text-xl text-subtext font-bold">
+        1 {serieOrder.anime.type} ({serieOrder.anime.duration} min)
+      </p>
+    )
+  }
 
   const filterEpisodes = () => {
     const filteredEpisodes = episodes.filter(
