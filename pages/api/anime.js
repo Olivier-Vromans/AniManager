@@ -1,7 +1,6 @@
 import prisma from "../../prisma/prismaClient.js";
 
 export default async function handler(req, res) {
-    console.log(req.query);
     try {
         await prisma.$connect();
         // check if there are any query params
@@ -20,8 +19,7 @@ export default async function handler(req, res) {
                     series: true,
                 },
             });
-            console.log(anime);
-            res.status(200).json(anime);
+            return res.status(200).json(anime);
         }
 
         // else
@@ -33,9 +31,9 @@ export default async function handler(req, res) {
         });
 
 
-        res.status(200).json(anime);
+        return res.status(200).json(anime);
     } catch (error) {
-        res.status(500).json({ error: error.message });
+        return res.status(500).json({ error: error.message });
     } finally {
         await prisma.$disconnect();
     }
