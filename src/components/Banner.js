@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import { useIsMobile } from "./isMobile.js";
+import formatStringToURL from "./FormatStringToURL.js";
 
 export default function Banner({ series, margin }) {
     const isMobile = useIsMobile();
@@ -26,9 +27,9 @@ export default function Banner({ series, margin }) {
             const randomBannerIndex = Math.floor(Math.random() * availableSeries.length);
 
             if (availableSeries[randomBannerIndex]?.series) {
-                formattedSeriesName = availableSeries[randomBannerIndex].series.serie_name.toLowerCase().replace(/\s/g, "-");
-                formattedAnimeTitle = availableSeries[randomBannerIndex].title.toLowerCase().replace(/\s/g, "-");
-            }else{
+                formattedSeriesName = formatStringToURL(availableSeries[randomBannerIndex]?.series.serie_name);
+                formattedAnimeTitle = formatStringToURL(availableSeries[randomBannerIndex].title);
+            } else {
                 return null
             }
 
@@ -40,8 +41,8 @@ export default function Banner({ series, margin }) {
                 const randomAnimeIndex = Math.floor(Math.random() * availableSeries.length);
                 const anime = availableSeries[randomAnimeIndex].anime;
 
-                formattedSeriesName = series.serie_name.toLowerCase().replace(/\s/g, "-");
-                formattedAnimeTitle = anime.title.toLowerCase().replace(/\s/g, "-");
+                formattedSeriesName = formatStringToURL(series.serie_name);
+                formattedAnimeTitle = formatStringToURL(anime.title);
             }
         }
 

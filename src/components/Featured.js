@@ -14,6 +14,10 @@ export default function Featured() {
         async function fetchViewingOrders() {
             try {
                 const response = await axios.get("/api/featured");
+
+                // randomize the order of the 3 feautred series
+                response.data.sort(() => Math.random() - 0.5);
+
                 setFeaturedSeries(response.data);
                 setFetching(false);
             } catch (error) {

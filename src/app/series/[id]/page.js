@@ -1,5 +1,6 @@
 "use client";
 import Banner from "@/components/Banner.js";
+import formatStringToURL from "@/components/FormatStringToURL.js";
 import Order from "@/components/Order.js";
 import ShowEpisodes from "@/components/ShowEpisodes.js";
 import { useIsMobile } from "@/components/isMobile.js";
@@ -26,14 +27,6 @@ export default function AnimeDetail({ params }) {
     async function fetchSeries() {
       try {
         const data = await getData(params.id);
-        if (data && data.anime) {
-          data.anime.forEach((anime) => {
-            const seriesTitle = data.title.toLowerCase().replace(/\s/g, "-");
-            const animeTitle = anime.title.toLowerCase().replace(/\s/g, "-");
-            anime.poster = `/img/webp/${seriesTitle}/${animeTitle}/poster.webp`;
-            anime.banner = `/img/webp/${seriesTitle}/${animeTitle}/banner.webp`;
-          });
-        }
         setSeries(data);
       } catch (error) {
         console.log(error);
@@ -46,17 +39,17 @@ export default function AnimeDetail({ params }) {
     return series.seriesOrder.some((order) => order.order_type === orderType);
   };
 
-  const seriesName = useMemo(() => series ? series.serie_name.toLowerCase().replace(/\s/g, '-') : '', [series]);
+  const seriesName = useMemo(() => series ? formatStringToURL(series.serie_name) : '', [series]);
 
   const randomPoster = useMemo(() => {
     if (series && series.animes.length > 0) {
       let randomPosterIndex = Math.floor(Math.random() * series.animes.length);
-      let animeTitle = series.animes[randomPosterIndex].title.toLowerCase().replace(/\s/g, '-');
+      let animeTitle = formatStringToURL(series.animes[randomPosterIndex].title);
       let poster = series.animes[randomPosterIndex].poster;
 
       while (!poster) {
         randomPosterIndex = Math.floor(Math.random() * series.animes.length);
-        animeTitle = series.animes[randomPosterIndex].title.toLowerCase().replace(/\s/g, '-');
+        animeTitle = formatStringToURL(series.animes[randomPosterIndex].title);
         poster = series.animes[randomPosterIndex].poster;
       }
 
@@ -149,7 +142,7 @@ export default function AnimeDetail({ params }) {
                       <div key={`${serieOrder.order}-${serieOrder.anime.anime_id}`} className="flex flex-row items-center justify-center w-full mb-4 sm:mb-0 md:m-6">
                         <Image
                           className="w-32 h-32 md:w-1/2 lg:w-1/6 object-contain"
-                          src={serieOrder.anime.poster ? `/img/anime/${series.serie_name.toLowerCase().replace(/\s/g, '-')}/${serieOrder.anime.title.toLowerCase().replace(/\s/g, '-')}/${serieOrder.anime.poster}` : `/img/anime/${series.serie_name.toLowerCase().replace(/\s/g, '-')}/${series.poster}`}
+                          src={serieOrder.anime.poster ? `/img/anime/${formatStringToURL(series.serie_name)}/${formatStringToURL(serieOrder.anime.title)}/${serieOrder.anime.poster}` : `/img/anime/${formatStringToURL(series.serie_name)}/${series.poster}`}
                           width={100}
                           height={100}
                           loader={({ src, width, quality }) => `${src}?w=${width}&q=${quality || 75}`}

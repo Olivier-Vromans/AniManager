@@ -1,7 +1,7 @@
 "use client"
 // anime.js
 import Banner from "@/components/Banner.js";
-import Card from "@/components/Card.js";
+import formatStringToURL from "@/components/FormatStringToURL.js";
 import axios from "axios";
 import Image from "next/image.js";
 import { useSearchParams } from "next/navigation";
@@ -62,10 +62,12 @@ export default function Anime() {
             <a href={`/series/${a.series.serie_id}`} key={a.series.serie_id} className="flex flex-col justify-center items-center w-44 h-64 lg:w-52 lg:h-64 2xl:w-64 2xl:h-96 relative ">
               <Image
                 className="opacity-60 rounded-xl object-cover blur-[1.5px]"
-                src={
-                  `/img/anime/${a.poster !== null ? `${a.series.serie_name.toLowerCase().replace(/\s/g, "-")}/${a.title.toLowerCase().replace(/\s/g, "-")}/${a.poster}` : `${a.series.serie_name.toLowerCase().replace(/\s/g, "-")}/${a.series.poster}`}`
+                src={`/img/anime/${a.poster !== null ?
+                  `${formatStringToURL(a.series.serie_name)}/${formatStringToURL(a.title)}/${a.poster}`
+                  :
+                  `${formatStringToURL(a.series.serie_name)}/${a.series.poster}`}`
                 }
-                alt={a.title}
+                alt={formatStringToURL(a.title)}
                 fill
               />
               <p className="md:text-2xl font-bold text-center font-japanese absolute">{a.title}</p>
