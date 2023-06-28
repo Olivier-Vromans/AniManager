@@ -122,11 +122,11 @@ export default function AnimeDetail({ params }) {
                   <p className="hidden sm:block text-lg font-gilroy text-subtext font-bold">Filter</p>
                   <div className="flex flex-row items-center justify-around w-full mb-4">
                     <button className={`btn mx-2 w-full ${isFillersVisible ? "" : "btn-inactive"}`}
-                      onClick={() => setIsFillersVisible(!isFillersVisible)}>
+                      onClick={() => handleToggleFillers(true)}>
                       ARC
                     </button>
                     <button className={`btn mx-2 w-full ${isFillersVisible ? "btn-inactive" : ""}`}
-                      onClick={() => setIsFillersVisible(!isFillersVisible)}>
+                      onClick={() => handleToggleFillers(false)}>
                       Filler
                     </button>
                   </div>
