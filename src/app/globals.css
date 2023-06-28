@@ -41,6 +41,11 @@
     @apply opacity-40 cursor-not-allowed;
   }
 }
+/* dark scrollbar */
+::-webkit-scrollbar {
+  display: none;
+}
+
 
 * {
   font-family: gilroy, sans-serif;

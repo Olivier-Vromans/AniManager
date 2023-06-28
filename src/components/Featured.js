@@ -57,7 +57,8 @@ export default function Featured() {
 
 
     return (
-        <div id="featured" className="z-10 flex flex-row items-center justify-between w-full overflow-x-scroll sm:overflow-hidden">
+        // Auto scrolling div
+         <div id="featured" className="flex flex-row items-center justify-between w-full overflow-x-scroll">
             {fetching ? (
                 // Display Skeleton loading state when fetching
                 <SkeletonTheme baseColor='#0e0e0e' highlightColor='#000' inline >

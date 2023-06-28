@@ -31,7 +31,7 @@ export default function Genre() {
     useEffect(() => {
         const calculateGridContent = () => {
             const windowWidth = window.innerWidth;
-            let maxContent = 2; // 2 columns for small screens
+            let maxContent = 4; // 2 columns for small screens
             if (windowWidth >= 1280) maxContent = 5; // 5 columns for xl screens
             else if (windowWidth >= 1024) maxContent = 4; // 4 columns for large screens
             else if (windowWidth >= 768) maxContent = 3; // 3 columns for medium screens
