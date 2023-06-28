@@ -150,7 +150,7 @@ export default function AnimeDetail({ params }) {
                         />
                         <div className="flex-1">
                           <p className="text-center md:text-start md:text-2xl">{serieOrder.anime.title}</p>
-                          <ShowEpisodes anime={serieOrder} isFillersVisible={isFillersVisible} />
+                          <ShowEpisodes serieOrder={serieOrder} isFillersVisible={isFillersVisible} />
                         </div>
                       </div>
                     );

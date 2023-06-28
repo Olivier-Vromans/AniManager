@@ -1,11 +1,11 @@
--- Active: 1676564627043@@127.0.0.1@3306@animanager
+-- Active: 1686139147299@@aws.connect.psdb.cloud@3306@animanager
 -- Use the database
 
 USE animanager;
 
 SELECT * from `Series`;
 
-SELECT * from `Anime` WHERE serie_id = 4;
+SELECT * from `Anime`;
 
 SELECT * from `Episode`;
 
@@ -13,7 +13,7 @@ SELECT * from `Episode`;
 INSERT INTO Series (serie_name, is_featured, poster) VALUES
   ('Naruto', true, 'poster.webp'),
   ('Demon Slayer', true, 'poster.webp'),
-  ('Code Geass', true, 'poster.webp'),
+  ('Code Geass', false, 'poster.webp'),
   ('Fate', true, 'poster.webp');
 
 INSERT INTO Anime (serie_id, title, description, release_date, is_dubbed, optional, poster, banner, type) VALUES
@@ -113,20 +113,20 @@ INSERT INTO SerieOrder (order_id, serie_id, order_type) VALUES
 INSERT INTO Episode (anime_id, episode_number, is_filler) VALUES
   ((SELECT anime_id FROM Anime WHERE title = 'Naruto'), 1, false),
   ((SELECT anime_id FROM Anime WHERE title = 'Naruto'), 2, false),
-  ((SELECT anime_id FROM Anime WHERE title = 'Naruto'), 3, false),
+  ((SELECT anime_id FROM Anime WHERE title = 'Naruto'), 3, true),
   ((SELECT anime_id FROM Anime WHERE title = 'Naruto'), 4, false),
   ((SELECT anime_id FROM Anime WHERE title = 'Naruto'), 5, false),
   ((SELECT anime_id FROM Anime WHERE title = 'Naruto'), 6, false),
   ((SELECT anime_id FROM Anime WHERE title = 'Naruto'), 7, false),
-  ((SELECT anime_id FROM Anime WHERE title = 'Naruto'), 8, false),
+  ((SELECT anime_id FROM Anime WHERE title = 'Naruto'), 8, true),
   ((SELECT anime_id FROM Anime WHERE title = 'Naruto'), 9, false),
   ((SELECT anime_id FROM Anime WHERE title = 'Naruto'), 10, false),
   ((SELECT anime_id FROM Anime WHERE title = 'Naruto'), 11, false),
-  ((SELECT anime_id FROM Anime WHERE title = 'Naruto'), 12, false),
+  ((SELECT anime_id FROM Anime WHERE title = 'Naruto'), 12, true),
   ((SELECT anime_id FROM Anime WHERE title = 'Naruto'), 13, false),
   ((SELECT anime_id FROM Anime WHERE title = 'Naruto'), 14, false),
   ((SELECT anime_id FROM Anime WHERE title = 'Naruto'), 15, false),
-  ((SELECT anime_id FROM Anime WHERE title = 'Naruto'), 16, false),
+  ((SELECT anime_id FROM Anime WHERE title = 'Naruto'), 16, true),
   ((SELECT anime_id FROM Anime WHERE title = 'Naruto'), 17, false),
   ((SELECT anime_id FROM Anime WHERE title = 'Naruto'), 18, false),
   ((SELECT anime_id FROM Anime WHERE title = 'Naruto'), 19, false),
@@ -156,7 +156,7 @@ INSERT INTO Episode (anime_id, episode_number, is_filler) VALUES
   ((SELECT anime_id FROM Anime WHERE title = 'Fate/stay night: Heaven\'s Feel'), 2, false),
   ((SELECT anime_id FROM Anime WHERE title = 'Fate/stay night: Heaven\'s Feel'), 3, false),
   ((SELECT anime_id FROM Anime WHERE title = 'Fate/stay night: Heaven\'s Feel'), 4, false),
-  ((SELECT anime_id FROM Anime WHERE title = 'Fate/stay night: Heaven\'s Feel'), 5, false);,
+  ((SELECT anime_id FROM Anime WHERE title = 'Fate/stay night: Heaven\'s Feel'), 5, false),
   ((SELECT anime_id FROM Anime WHERE title = 'Fate/Grand Order: Babylonia'), 1, false),
   ((SELECT anime_id FROM Anime WHERE title = 'Fate/Grand Order: Babylonia'), 2, false),
   ((SELECT anime_id FROM Anime WHERE title = 'Fate/Grand Order: Babylonia'), 3, false),
